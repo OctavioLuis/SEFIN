@@ -32,6 +32,8 @@ public class DocumentoPdf {
     @Lob @Basic(fetch = FetchType.LAZY)
     private File content;
 //    private Blob content;
+    private String filename;
+	private String contentType;
     
     public DocumentoPdf() {}
     
@@ -101,13 +103,33 @@ public class DocumentoPdf {
 		this.content = content;
 	}
 
+	
+	
+	public String getFilename() {
+		return filename;
+	}
+
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
+
+	public String getContentType() {
+		return contentType;
+	}
+
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
+	}
+
 	@Override
 	public String toString() {
 		return "DocumentoPdf [idDucumento=" + idDucumento + ", folio=" + folio + ", nombreEmisor=" + nombreEmisor
 				+ ", fechaEntrada=" + fechaEntrada + ", quienModifico=" + quienModifico + ", fechaModificacion="
 				+ fechaModificacion + ", asunto=" + asunto + ", tipo=" + tipo + ", idEncargado=" + idEncargado
-				+ ", content=" + content + "]";
+				+ ", content=" + content + ", filename=" + filename + ", contentType=" + contentType + "]";
 	}
+
+	
 
 
 

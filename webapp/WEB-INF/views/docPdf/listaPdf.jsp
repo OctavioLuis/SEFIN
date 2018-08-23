@@ -33,10 +33,9 @@
 		<c:if test="${msg!=null }">
 			<div class='alert alert-success' role="alert">${ msg }</div>
 		</c:if>
-		
+
 		<a href="${urlCreate}" class="btn btn-success" role="button"
-			title="Nueva Pelicula">Nueva</a><br>
-		<br>
+			title="Nueva Pelicula">Nueva</a><br> <br>
 
 		<div class="table-responsive">
 			<table class="table table-hover table-striped table-bordered">
@@ -49,28 +48,35 @@
 					<th>asunto</th>
 					<th>tipo</th>
 					<th>idEncargado</th>
+					<th>Archivo</th>
 					<th>Opciones</th>
+					<th>Guardar</th>
 				</tr>
 				<c:forEach items="${documentoPdf}" var="pdf">
 					<tr>
 						<td>${pdf.folio}</td>
-						<td>${pdf.content}</td>
 						<td>${pdf.nombreEmisor}</td>
 						<td><fmt:formatDate value="${pdf.fechaEntrada}"
-								pattern="dd-MM-yyyy" /></td>												
-						<td>${pdf.quienModifico}</td>						
+								pattern="dd-MM-yyyy" /></td>
+						<td>${pdf.quienModifico}</td>
 						<td><fmt:formatDate value="${pdf.fechaModificacion}"
 								pattern="dd-MM-yyyy" /></td>
 						<td>${pdf.asunto}</td>
 						<td>${pdf.tipo}</td>
-						<td>${pdf.idEncargado}</td>						
-						<td>
-						<a href="${urlEdit}/${pdf.idDucumento}" class="btn btn-success btn-sm" role="button" title="Edit"><span class="glyphicon glyphicon-pencil"></span></a>
-						<a href="${urlDelete}/${pdf.idDucumento}" onclick="return confirm('¿Esta seguro?')" class="btn btn-danger btn-sm" role="button"	title="Eliminar"><span class="glyphicon glyphicon-trash"></span></a>
-						<a href="${pageContext.request.contextPath}/download/${pdf.idDucumento}">
-						<img src="${urlPublic}/images/save_icon.gif" border="0" title="Download this document"/> </a> 
-						
-						</td>
+						<td>${pdf.idEncargado}</td>
+						<td>${pdf.content}</td>
+						<td><a href="${urlEdit}/${pdf.idDucumento}"
+							class="btn btn-success btn-sm" role="button" title="Edit"><span
+								class="glyphicon glyphicon-pencil"></span></a> <a
+							href="${urlDelete}/${pdf.idDucumento}"
+							onclick="return confirm('¿Esta seguro?')"
+							class="btn btn-danger btn-sm" role="button" title="Eliminar"><span
+								class="glyphicon glyphicon-trash"></span></a></td>
+						<td><a
+							href="${pageContext.request.contextPath}/download/${pdf.idDucumento}">
+								<img src="${urlPublic}/images/save_icon.gif" border="0"
+								title="Download this document" />
+						</a></td>
 					</tr>
 				</c:forEach>
 

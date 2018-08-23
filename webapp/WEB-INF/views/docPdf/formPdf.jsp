@@ -125,7 +125,7 @@
 					<div class="form-group">
 						<label for="imagen">Archivo</label>
 						<!-- 						<hidden name="imagen" /> -->
-						<input type="file" name="file" id="file"></input>
+						<input type="file" name="file" id="file" required="required"></input>
 						<p class="help-block">Documento a guardar</p>
 					</div>
 				</div>
