@@ -12,6 +12,7 @@
 <title>Listado de Docuemnto</title>
 
 <spring:url value="/resources" var="urlPublic"></spring:url>
+<spring:url value="/" var="urlRoot"></spring:url>
 <spring:url value="/" var="urlCreate" />
 <spring:url value="/edit" var="urlEdit" />
 <spring:url value="/delete" var="urlDelete" />
@@ -53,6 +54,7 @@
 				<c:forEach items="${documentoPdf}" var="pdf">
 					<tr>
 						<td>${pdf.folio}</td>
+						<td>${pdf.content}</td>
 						<td>${pdf.nombreEmisor}</td>
 						<td><fmt:formatDate value="${pdf.fechaEntrada}"
 								pattern="dd-MM-yyyy" /></td>												
@@ -65,6 +67,9 @@
 						<td>
 						<a href="${urlEdit}/${pdf.idDucumento}" class="btn btn-success btn-sm" role="button" title="Edit"><span class="glyphicon glyphicon-pencil"></span></a>
 						<a href="${urlDelete}/${pdf.idDucumento}" onclick="return confirm('¿Esta seguro?')" class="btn btn-danger btn-sm" role="button"	title="Eliminar"><span class="glyphicon glyphicon-trash"></span></a>
+						<a href="${pageContext.request.contextPath}/download/${pdf.idDucumento}">
+						<img src="${urlPublic}/images/save_icon.gif" border="0" title="Download this document"/> </a> 
+						
 						</td>
 					</tr>
 				</c:forEach>

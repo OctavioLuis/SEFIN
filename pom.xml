@@ -5,7 +5,9 @@
 	<groupId>gob.sefin</groupId>
 	<artifactId>SEFIN</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-
+	
+	
+    
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -44,6 +46,17 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.43</version>
 		</dependency>
-
+		
+		
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.3.1</version>
+		</dependency>
+		
+		
+		
+        
+ 
 	</dependencies>
 </project>

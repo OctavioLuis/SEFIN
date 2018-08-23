@@ -123,10 +123,10 @@
 
 				<div class="col-sm-3">
 					<div class="form-group">
-						<label for="imagen">Imagen</label>
+						<label for="imagen">Archivo</label>
 						<!-- 						<hidden name="imagen" /> -->
-						<input type="file" id="archivoImagen" name="archivoImagen" />
-						<p class="help-block">Imagen de la pelicula</p>
+						<input type="file" name="file" id="file"></input>
+						<p class="help-block">Documento a guardar</p>
 					</div>
 				</div>
 			</div>

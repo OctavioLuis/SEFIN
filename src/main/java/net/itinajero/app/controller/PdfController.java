@@ -1,8 +1,14 @@
 package net.itinajero.app.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -17,6 +23,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
 
 import net.itinajero.app.model.DocumentoPdf;
 import net.itinajero.app.service.IPdfService;
@@ -33,12 +42,29 @@ public class PdfController {
 	}
 	
 	@PostMapping("/save")
-	public String guardar(@ModelAttribute DocumentoPdf documentoPdf, BindingResult result, RedirectAttributes attributes) {
+	public String guardar(@ModelAttribute DocumentoPdf documentoPdf, BindingResult result, 
+			RedirectAttributes attributes, @RequestParam("file") MultipartFile file) {
 		
 		if (result.hasErrors()) {
 			System.out.println("Existieron errores");
 			return "docPdf/formPdf";
 		}
+		if (!file.isEmpty()) {
+//			 Session session = (Session)entityManager.getDelegate();
+			
+			System.out.println("File:" + file.getOriginalFilename());
+			System.out.println("ContentType:" + file.getContentType());
+			try {
+				 File destFile= new File(file.getOriginalFilename());
+				    FileUtils.copyInputStreamToFile(file.getInputStream(), destFile);
+//				Blob blob=Hibernate.getLobCreator(sessionfactory.getCurrentSession ()). CreateBlob(file.getInputStream());
+//				Blob newContent = session.getLobHelper().createBlob(file.getInputStream(), file.getSize()); 
+				documentoPdf.setContent(destFile);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+		}
+		
 		
 		servicePdf.insertar(documentoPdf);
 		attributes.addFlashAttribute("msg", "Registro Guardado");
@@ -63,6 +89,31 @@ public class PdfController {
 		attribute.addFlashAttribute("msg", "La pelicula fue eliminada");
 		servicePdf.eliminar(idDocumento);
 		return "redirect:/lista";
+	}
+	
+	@RequestMapping("/download/{idDucumento}")
+	public String download(@PathVariable("idDucumento")
+	int idDocumento, HttpServletResponse response) {
+		
+		DocumentoPdf doc = servicePdf.buscarPorId(idDocumento);
+
+	      
+		try {
+			response.setHeader("Content-Disposition", "inline;filename=\"" +"prueba.pdf"+ "\"");
+			OutputStream out = response.getOutputStream();
+			FileUtils.copyFile(doc.getContent(), out);
+			out.flush();
+			out.close();
+		
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	       
+	       
+	        
+	        		
+		
+		return null;
 	}
 	
 	

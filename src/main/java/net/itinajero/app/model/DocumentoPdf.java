@@ -1,11 +1,16 @@
 package net.itinajero.app.model;
 
+import java.io.File;
+import java.sql.Blob;
 import java.util.Date;
 
+import javax.persistence.Basic;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 
 
@@ -23,6 +28,10 @@ public class DocumentoPdf {
     private String  asunto;
     private String tipo;
     private int idEncargado;
+    
+    @Lob @Basic(fetch = FetchType.LAZY)
+    private File content;
+//    private Blob content;
     
     public DocumentoPdf() {}
     
@@ -80,12 +89,27 @@ public class DocumentoPdf {
 	public void setIdEncargado(int idEncargado) {
 		this.idEncargado = idEncargado;
 	}
+	
+	
+	
+
+	public File getContent() {
+		return content;
+	}
+
+	public void setContent(File content) {
+		this.content = content;
+	}
+
 	@Override
 	public String toString() {
 		return "DocumentoPdf [idDucumento=" + idDucumento + ", folio=" + folio + ", nombreEmisor=" + nombreEmisor
 				+ ", fechaEntrada=" + fechaEntrada + ", quienModifico=" + quienModifico + ", fechaModificacion="
-				+ fechaModificacion + ", asunto=" + asunto + ", tipo=" + tipo + ", idEncargado=" + idEncargado + "]";
+				+ fechaModificacion + ", asunto=" + asunto + ", tipo=" + tipo + ", idEncargado=" + idEncargado
+				+ ", content=" + content + "]";
 	}
+
+
 
     
 }
