@@ -28,15 +28,22 @@ import org.springframework.web.multipart.MultipartFile;
 
 import net.itinajero.app.model.DocumentoPdf;
 import net.itinajero.app.service.IPdfService;
+import net.itinajero.app.service.IUsuarioService;
 
 @Controller
+@RequestMapping("/pdf")
 public class PdfController {
 
 	@Autowired
 	private IPdfService servicePdf;
+	
+	@Autowired
+	private IUsuarioService serviceUsuario;
 
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String formPdf(@ModelAttribute DocumentoPdf documentoPdf) {
+
+	@RequestMapping(value = "/crear", method = RequestMethod.GET)
+	public String formPdf(@ModelAttribute DocumentoPdf documentoPdf, Model model) {
+		model.addAttribute("usuario", serviceUsuario.buscarTodas());		
 		return "docPdf/formPdf";
 	}
 
@@ -71,12 +78,13 @@ public class PdfController {
 
 		servicePdf.insertar(documentoPdf);
 		attributes.addFlashAttribute("msg", "Registro Guardado");
-		return "redirect:/lista";
+		return "redirect:/pdf/lista";
 	}
 
 	@GetMapping("/lista")
 	public String mostrarPdf(Model model) {
 		model.addAttribute("documentoPdf", servicePdf.buscarTodas());
+		model.addAttribute("usuario", serviceUsuario.buscarTodas());
 		return "docPdf/listaPdf";
 	}
 
@@ -84,6 +92,7 @@ public class PdfController {
 	public String editar(@PathVariable("idDucumento") int idDucumento, Model model) {
 		DocumentoPdf pdf = servicePdf.buscarPorId(idDucumento);
 		model.addAttribute("documentoPdf", pdf);
+		model.addAttribute("usuario", serviceUsuario.buscarTodas());
 		return "docPdf/formPdf";
 	}
 
@@ -91,7 +100,7 @@ public class PdfController {
 	public String eliminar(@PathVariable("id") int idDocumento, RedirectAttributes attribute) {
 		attribute.addFlashAttribute("msg", "La pelicula fue eliminada");
 		servicePdf.eliminar(idDocumento);
-		return "redirect:/lista";
+		return "redirect:/pdf/lista";
 	}
 
 	@RequestMapping("/download/{idDucumento}")

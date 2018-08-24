@@ -13,6 +13,7 @@
 
 <spring:url value="/resources" var="urlPublic"></spring:url>
 <spring:url value="/usuario/save" var="urlForm"></spring:url>
+<spring:url value="/usuario/lista" var="urlListar"></spring:url>
 <link href="${urlPublic}/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet">
 <link href="${urlPublic}/bootstrap/css/theme.css" rel="stylesheet">
@@ -94,25 +95,13 @@
 				</div>
 
 
-				<div class="col-sm-3">
-					<div class="form-group">
-						<label for="usuario">usuario</label>
-						<form:input type="text" class="form-control" path="usuario"
-							id="usuario" required="required" />
-					</div>
-				</div>
-
-				<div class="col-sm-3">
-					<div class="form-group">
-						<label for="pasw">pasw</label>
-						<form:input type="text" class="form-control" path="pasw" id="pasw"
-							required="required" />
-					</div>
-				</div>
 			</div>
 
 			<div class="row"></div>
-			<button type="submit" class="btn btn-danger">Guardar</button>
+			<button type="submit" class="btn btn-success">Guardar</button>
+			
+			<a href="${urlListar}" class="btn btn-danger" role="button"
+			title="Nueva Pelicula">Cancelar</a><br> <br>
 		</form:form>
 
 		<hr class="featurette-divider">

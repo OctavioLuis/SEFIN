@@ -13,24 +13,21 @@ public class Usuario {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY) // auto-increment MYSQL
 	 private int idUsuario; 
-	 private String usuario;
+//	 private String usuario;
 	 private String nombre;
 	 private String apellidoP;
 	 private String maternoM;
 	 private String cargo;
-	 private String pasw;
-	public int getIdUsuario() {
+//	 private String pasw;
+	 private String nombreCompleto;
+	
+	 public int getIdUsuario() {
 		return idUsuario;
 	}
 	public void setIdUsuario(int idUsuario) {
 		this.idUsuario = idUsuario;
 	}
-	public String getUsuario() {
-		return usuario;
-	}
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
-	}
+	
 	public String getNombre() {
 		return nombre;
 	}
@@ -55,18 +52,24 @@ public class Usuario {
 	public void setCargo(String cargo) {
 		this.cargo = cargo;
 	}
-	public String getPasw() {
-		return pasw;
+	
+	
+	
+	public String getNombreCompleto() {
+		return nombreCompleto;
 	}
-	public void setPasw(String pasw) {
-		this.pasw = pasw;
+	public void setNombreCompleto(String nombreCompleto) {
+		this.nombreCompleto = nombreCompleto;
 	}
 	@Override
 	public String toString() {
-		return "Usuario [idUsuario=" + idUsuario + ", usuario=" + usuario + ", nombre=" + nombre + ", apellidoP="
-				+ apellidoP + ", maternoM=" + maternoM + ", cargo=" + cargo + ", pasw=" + pasw + "]";
+		return "Usuario [idUsuario=" + idUsuario + ", nombre=" + nombre + ", apellidoP=" + apellidoP + ", maternoM="
+				+ maternoM + ", cargo=" + cargo + ", nombreCompleto=" + nombreCompleto + "]";
 	}
-	 
+	
+	
+	
+	
 	 
 
 }

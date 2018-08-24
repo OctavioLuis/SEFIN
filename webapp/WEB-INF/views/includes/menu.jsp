@@ -10,14 +10,14 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="${urlRoot}">My CineSite</a>
+          <a class="navbar-brand" href="${urlRoot}">Inicio</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">  
-            <li><a href="${urlRoot}peliculas/index">Peliculas</a></li>
-            <li><a href="${urlRoot}banners/index">Banners</a></li>             
-            <li><a href="#">Acerca</a></li>
-            <li><a href="#">Login</a></li>            
+            <li><a href="${urlRoot}pdf/lista">Documentos Pdf</a></li>
+            <li><a href="#">Documentos compartidos</a></li>             
+            <li><a href="${urlRoot}usuario/lista">Usuarios</a></li>
+            
           </ul>
         </div><!--/.nav-collapse -->
       </div>

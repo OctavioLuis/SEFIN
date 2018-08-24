@@ -9,13 +9,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
-<title>Listado de Docuemnto</title>
+<title>Listado de usuarios</title>
 
 <spring:url value="/resources" var="urlPublic"></spring:url>
 <spring:url value="/" var="urlRoot"></spring:url>
-<spring:url value="/pdf/crear" var="urlCreate" />
-<spring:url value="/pdf/edit" var="urlEdit" />
-<spring:url value="/pdf/delete" var="urlDelete" />
+<spring:url value="/usuario/crear" var="urlCreate" />
+<spring:url value="/usuario/edit" var="urlEdit" />
+<spring:url value="/usuario/delete" var="urlDelete" />
 
 <link href="${urlPublic}/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -29,64 +29,42 @@
 	<jsp:include page="../includes/menu.jsp"></jsp:include>
 	<div class="container theme-showcase" role="main">
 
-		<h3>Listado de Peliculas</h3>
+		<h3>Listado de usuarios</h3>
 		<c:if test="${msg!=null }">
 			<div class='alert alert-success' role="alert">${ msg }</div>
 		</c:if>
 
 		<a href="${urlCreate}" class="btn btn-success" role="button"
-			title="Nueva Pelicula">Nueva</a><br> <br>
+			title="Nuevo usuario">Nuevo</a><br> <br>
 
 		<div class="table-responsive">
 			<table class="table table-hover table-striped table-bordered">
 				<tr>
-					<th>folio</th>
-					<th>nombreEmisor</th>
-					<th>fechaEntrada</th>
-					<th>quienModifico</th>
-					<th>fechaModificacion</th>
-					<th>asunto</th>
-					<th>tipo</th>
-					<th>idEncargado</th>
-					<th>Archivo</th>
-					<th>Opciones</th>
-					<th>Guardar</th>
+					
+					<th>nombre</th>
+					<th>apellidoP</th>
+					<th>maternoM</th>
+					<th>cargo</th>
+					
+					<th>Opcion</th>
+					
 				</tr>
-				<c:forEach items="${documentoPdf}" var="pdf">
+				<c:forEach items="${usuario}" var="usuario">
 					<tr>
-						<td>${pdf.folio}</td>
-						<td>${pdf.nombreEmisor}</td>
-						<td><fmt:formatDate value="${pdf.fechaEntrada}"
-								pattern="dd-MM-yyyy" /></td>
-								<c:forEach items="${usuario}" var="us">
-						<c:if test="${us.idUsuario==pdf.quienModifico}">
-							<td>${us.nombreCompleto}</td>
-						</c:if>
-						</c:forEach>
-<%-- 						<td>${pdf.quienModifico}</td> --%>
-						<td><fmt:formatDate value="${pdf.fechaModificacion}"
-								pattern="dd-MM-yyyy" /></td>
-						<td>${pdf.asunto}</td>
-						<td>${pdf.tipo}</td>						
-						<c:forEach items="${usuario}" var="us">
-						<c:if test="${us.idUsuario==pdf.idEncargado}">
-							<td>${us.nombreCompleto}</td>
-						</c:if>
-						</c:forEach>
-<%-- 						<td>${pdf.idEncargado}</td> --%>
-						<td>${pdf.content}</td>
-						<td><a href="${urlEdit}/${pdf.idDucumento}"
+<%-- 						<td>${usuario.usuario}</td> --%>
+						<td>${usuario.nombre}</td>
+						<td>${usuario.apellidoP}</td>
+						<td>${usuario.maternoM}</td>
+						<td>${usuario.cargo}</td>
+<%-- 						<td>${usuario.pasw}</td>												 --%>
+						<td><a href="${urlEdit}/${usuario.idUsuario}"
 							class="btn btn-success btn-sm" role="button" title="Edit"><span
 								class="glyphicon glyphicon-pencil"></span></a> <a
-							href="${urlDelete}/${pdf.idDucumento}"
+							href="${urlDelete}/${usuario.idUsuario}"
 							onclick="return confirm('¿Esta seguro?')"
 							class="btn btn-danger btn-sm" role="button" title="Eliminar"><span
 								class="glyphicon glyphicon-trash"></span></a></td>
-						<td><a
-							href="${pageContext.request.contextPath}/pdf/download/${pdf.idDucumento}">
-								<img src="${urlPublic}/images/save_icon.gif" border="0"
-								title="Download this document" />
-						</a></td>
+						
 					</tr>
 				</c:forEach>
 

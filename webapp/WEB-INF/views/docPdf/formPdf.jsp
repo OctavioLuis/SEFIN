@@ -9,10 +9,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
-<title>Creacion de Peliculas</title>
+<title>Subir archivo</title>
 
 <spring:url value="/resources" var="urlPublic"></spring:url>
-<spring:url value="/save" var="urlForm"></spring:url>
+<spring:url value="/pdf/save" var="urlForm"></spring:url>
+<spring:url value="/pdf/lista" var="urlListar"></spring:url>
+
 <link href="${urlPublic}/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet">
 <link href="${urlPublic}/bootstrap/css/theme.css" rel="stylesheet">
@@ -30,7 +32,7 @@
 
 		<div class="page-header">
 			<h3 class="blog-title">
-				<span class="label label-success">Datos de la Pelicula</span>
+				<span class="label label-success">Datos de los archivos</span>
 			</h3>
 		</div>
 		
@@ -83,11 +85,19 @@
 
 			<div class="row">
 
+<!-- 				<div class="col-sm-3"> -->
+<!-- 					<div class="form-group"> -->
+<!-- 						<label for=quienModifico>quien Modifico</label> -->
+<%-- 						<form:input type="text" class="form-control" path="quienModifico" --%>
+<%-- 							id="quienModifico" required="required" /> --%>
+<!-- 					</div> -->
+<!-- 				</div> -->
+				
 				<div class="col-sm-3">
 					<div class="form-group">
-						<label for=quienModifico>quien Modifico</label>
-						<form:input type="text" class="form-control" path="quienModifico"
-							id="quienModifico" required="required" />
+						<label for="quienModifico" class="control-label">quien Modifico</label>
+						<form:select id="quienModifico" path="quienModifico"	class="form-control" 
+						items="${usuario}" itemLabel="NombreCompleto" itemValue="idUsuario" />
 					</div>
 				</div>
 
@@ -111,14 +121,23 @@
 
 			<div class="row">
 
+<!-- 				<div class="col-sm-3"> -->
+<!-- 					<div class="form-group"> -->
+<!-- 						<label for="idEncargado">idEncargado</label> -->
+<%-- 						<form:input type="text" class="form-control" path="idEncargado" --%>
+<%-- 							id="idEncargado" required="required" /> --%>
+<!-- 					</div> -->
+<!-- 				</div> -->
+
+				
+				
 				<div class="col-sm-3">
 					<div class="form-group">
-						<label for="idEncargado">idEncargado</label>
-						<form:input type="text" class="form-control" path="idEncargado"
-							id="idEncargado" required="required" />
+						<label for="idEncargado" class="control-label">idEncargado</label>
+						<form:select id="idEncargado" path="idEncargado"	class="form-control" 
+						items="${usuario}" itemLabel="NombreCompleto" itemValue="idUsuario" />
 					</div>
 				</div>
-
 				
 
 				<div class="col-sm-3">
@@ -141,11 +160,9 @@
 				</div>
 			</div>
 
-
-
-
-
-			<button type="submit" class="btn btn-danger">Guardar</button>
+			<button type="submit" class="btn btn-success">Guardar</button>
+			<a href="${urlListar}" class="btn btn-danger" role="button"
+			title="Nueva Pelicula">Cancelar</a><br> <br>
 		</form:form>
 
 		<hr class="featurette-divider">
@@ -166,6 +183,13 @@
 	<script>
 		$(function() {
 			$("#fechaEstreno").datepicker({
+				dateFormat : 'dd-mm-yy'
+			});
+		});
+		
+		
+		$(function() {
+			$("#fechaEntrada").datepicker({
 				dateFormat : 'dd-mm-yy'
 			});
 		});
