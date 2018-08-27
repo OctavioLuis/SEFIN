@@ -41,12 +41,12 @@
 			<table class="table table-hover table-striped table-bordered">
 				<tr>
 					
-					<th>nombre</th>
-					<th>apellidoP</th>
-					<th>maternoM</th>
-					<th>cargo</th>
+					<th>Nombre</th>
+					<th>Primer apellido</th>
+					<th>Segundo apellido</th>
+					<th>Cargo</th>
 					
-					<th>Opcion</th>
+					<th>Opciónes</th>
 					
 				</tr>
 				<c:forEach items="${usuario}" var="usuario">

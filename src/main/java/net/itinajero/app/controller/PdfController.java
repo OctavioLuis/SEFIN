@@ -102,6 +102,23 @@ public class PdfController {
 		servicePdf.eliminar(idDocumento);
 		return "redirect:/pdf/lista";
 	}
+	
+	@RequestMapping(value="/searchByDate", method=RequestMethod.POST)
+	public String buscarPorFecha(@RequestParam("fechaBusqueda") Date fechaBusqueda, Model model) {
+		System.out.println("Fecha busqueda: "+fechaBusqueda);
+		model.addAttribute("documentoPdf", servicePdf.buscarporFecha(fechaBusqueda));
+		model.addAttribute("usuario", serviceUsuario.buscarTodas());
+		return "docPdf/listaPdf";
+	}
+	
+	@RequestMapping(value="/searchByFolio", method=RequestMethod.POST)
+	public String buscarPorFolio(@RequestParam("folio") String folio, Model model) {
+		System.out.println("Fecha busqueda: "+folio);
+		model.addAttribute("documentoPdf", servicePdf.buscarporFolio(folio));
+		model.addAttribute("usuario", serviceUsuario.buscarTodas());
+		return "docPdf/listaPdf";
+	}
+	
 
 	@RequestMapping("/download/{idDucumento}")
 	public String download(@PathVariable("idDucumento") int idDocumento, HttpServletResponse response) {

@@ -1,5 +1,6 @@
 package net.itinajero.app.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,6 +35,16 @@ public class PdfServiceImpl implements IPdfService{
 	public void eliminar(int idDocumento) {
 		pdfRepo.deleteById(idDocumento);
 		
+	}
+	@Override
+	public List<DocumentoPdf> buscarporFecha(Date fecha) {
+		// TODO Auto-generated method stub
+		return pdfRepo.findByFecha(fecha);
+	}
+	@Override
+	public List<DocumentoPdf> buscarporFolio(String folio) {
+		// TODO Auto-generated method stub
+		return pdfRepo.findByFolio(folio);
 	}
 
 }

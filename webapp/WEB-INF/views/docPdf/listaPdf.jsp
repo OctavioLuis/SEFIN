@@ -15,42 +15,98 @@
 <spring:url value="/" var="urlRoot"></spring:url>
 <spring:url value="/pdf/crear" var="urlCreate" />
 <spring:url value="/pdf/edit" var="urlEdit" />
+<spring:url value="/pdf/lista" var="urllistar" />
 <spring:url value="/pdf/delete" var="urlDelete" />
 
 <link href="${urlPublic}/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet">
 <link href="${urlPublic}/bootstrap/css/theme.css" rel="stylesheet">
+<link rel="stylesheet"
+	href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
 </head>
 
 <body>
 
+
 	<!-- Fixed navbar -->
 	<jsp:include page="../includes/menu.jsp"></jsp:include>
-	<div class="container theme-showcase" role="main">
 
-		<h3>Listado de Peliculas</h3>
+
+<div class="container theme-showcase" role="main">
+<div class="table-responsive">
+	<div class="row">
+		<div class="col-sm-3">
+		
+		
+			<form class="form-inline" action="${urlRoot}pdf/searchByFolio" method="post">
+
+
+				<div class="form-group">
+					<label for="folio">Buscar por folio</label> <input type="text"
+						class="form-control" name="folio" id="folio"
+						required="required" />
+				</div>
+
+
+
+
+				<button type="submit" class="btn btn-primary">Filtrar</button>
+			</form>
+		</div>
+		
+		<div class="col-sm-3">
+			<form class="form-inline" action="${urlRoot}pdf/searchByDate" method="post">
+
+
+
+
+				<div class="form-group">
+					<label for="fechaBusqueda">Buscar por fecha</label> <input
+						type="text" class="form-control" name="fechaBusqueda"
+						id="fechaBusqueda" required="required" />
+				</div>
+
+
+				<button type="submit" class="btn btn-primary">Filtrar</button>
+			</form>
+		</div>
+		
+		
+		<div class="col-sm-3">
+		
+		<a href="${urllistar}" class="btn btn-success" role="button"
+			title="Nueva Pelicula">Ver todos los documentos</a><br> <br>
+		</div>
+	</div>
+
+	
+
+		<h3>Listado de documentos</h3>
 		<c:if test="${msg!=null }">
 			<div class='alert alert-success' role="alert">${ msg }</div>
 		</c:if>
 
 		<a href="${urlCreate}" class="btn btn-success" role="button"
-			title="Nueva Pelicula">Nueva</a><br> <br>
+			title="Nueva Pelicula">Nuevo documento</a><br> <br>
 
-		<div class="table-responsive">
+
+
+
+		
 			<table class="table table-hover table-striped table-bordered">
 				<tr>
 					<th>folio</th>
-					<th>nombreEmisor</th>
-					<th>fechaEntrada</th>
-					<th>quienModifico</th>
-					<th>fechaModificacion</th>
-					<th>asunto</th>
-					<th>tipo</th>
-					<th>idEncargado</th>
+					<th>Nombre del emisor</th>
+					<th>Fecha de creación</th>
+					<th>Quien modifico</th>
+					<th>Fecha de modificación</th>
+					<th>Asunto</th>
+					<th>Tipo de documento</th>
+					<th>Encargado</th>
 					<th>Archivo</th>
 					<th>Opciones</th>
-					<th>Guardar</th>
+					<th>Ver</th>
 				</tr>
 				<c:forEach items="${documentoPdf}" var="pdf">
 					<tr>
@@ -58,28 +114,28 @@
 						<td>${pdf.nombreEmisor}</td>
 						<td><fmt:formatDate value="${pdf.fechaEntrada}"
 								pattern="dd-MM-yyyy" /></td>
-								<c:forEach items="${usuario}" var="us">
-						<c:if test="${us.idUsuario==pdf.quienModifico}">
-							<td>${us.nombreCompleto}</td>
-						</c:if>
+						<c:forEach items="${usuario}" var="us">
+							<c:if test="${us.idUsuario==pdf.quienModifico}">
+								<td>${us.nombreCompleto}</td>
+							</c:if>
 						</c:forEach>
-<%-- 						<td>${pdf.quienModifico}</td> --%>
+						<%-- 						<td>${pdf.quienModifico}</td> --%>
 						<td><fmt:formatDate value="${pdf.fechaModificacion}"
 								pattern="dd-MM-yyyy" /></td>
 						<td>${pdf.asunto}</td>
-						<td>${pdf.tipo}</td>						
+						<td>${pdf.tipo}</td>
 						<c:forEach items="${usuario}" var="us">
-						<c:if test="${us.idUsuario==pdf.idEncargado}">
-							<td>${us.nombreCompleto}</td>
-						</c:if>
+							<c:if test="${us.idUsuario==pdf.idEncargado}">
+								<td>${us.nombreCompleto}</td>
+							</c:if>
 						</c:forEach>
-<%-- 						<td>${pdf.idEncargado}</td> --%>
+						<%-- 						<td>${pdf.idEncargado}</td> --%>
 						<td>${pdf.content}</td>
 						<td><a href="${urlEdit}/${pdf.idDucumento}"
 							class="btn btn-success btn-sm" role="button" title="Edit"><span
 								class="glyphicon glyphicon-pencil"></span></a> <a
 							href="${urlDelete}/${pdf.idDucumento}"
-							onclick="return confirm('¿Esta seguro?')"
+							onclick="return confirm('¿Esta seguro de eliminar el documento?')"
 							class="btn btn-danger btn-sm" role="button" title="Eliminar"><span
 								class="glyphicon glyphicon-trash"></span></a></td>
 						<td><a
@@ -104,8 +160,25 @@
 	<!-- Bootstrap core JavaScript
     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
+
+	<!--   ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-	<script src="bootstrap/js/bootstrap.min.js"></script>
+	<script src="${urlPublic}/bootstrap/js/bootstrap.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script>
+		$(function() {
+			$("#fechaBusqueda").datepicker({
+				dateFormat : 'dd-mm-yy'
+			});
+		});
+
+		$(function() {
+			$("#fechaEntrada").datepicker({
+				dateFormat : 'dd-mm-yy'
+			});
+		});
+	</script>
 </body>
 </html>

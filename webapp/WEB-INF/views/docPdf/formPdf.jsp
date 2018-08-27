@@ -32,7 +32,7 @@
 
 		<div class="page-header">
 			<h3 class="blog-title">
-				<span class="label label-success">Datos de los archivos</span>
+				<span class="label label-success">Datos</span>
 			</h3>
 		</div>
 		
@@ -76,7 +76,7 @@
 
 				<div class="col-sm-3">
 					<div class="form-group">
-						<label for="fechaEntrada">fechaEntrada</label> <form:input type="text"
+						<label for="fechaEntrada">Fecha de entrada</label> <form:input type="text"
 							class="form-control" path="fechaEntrada" id="fechaEntrada"
 							required="required" />
 					</div>
@@ -95,7 +95,7 @@
 				
 				<div class="col-sm-3">
 					<div class="form-group">
-						<label for="quienModifico" class="control-label">quien Modifico</label>
+						<label for="quienModifico" class="control-label">Quien modifico</label>
 						<form:select id="quienModifico" path="quienModifico"	class="form-control" 
 						items="${usuario}" itemLabel="NombreCompleto" itemValue="idUsuario" />
 					</div>
@@ -103,14 +103,14 @@
 
 				<div class="col-sm-3">
 					<div class="form-group">
-						<label for="fechaModificacion">fechaModificacion</label> <form:input type="text"
+						<label for="fechaModificacion">Fecha de modificación</label> <form:input type="text"
 							class="form-control" path="fechaModificacion" id="fechaEstreno"
 							required="required" />
 					</div>
 				</div>
 				<div class="col-sm-3">
 					<div class="form-group">
-						<label for="tipo">tipo</label>
+						<label for="tipo">Tipo de documento</label>
 						<form:input type="text" class="form-control" path="tipo"
 							id="tipo" required="required" />
 					</div>
@@ -133,9 +133,9 @@
 				
 				<div class="col-sm-3">
 					<div class="form-group">
-						<label for="idEncargado" class="control-label">idEncargado</label>
+						<label for="idEncargado" class="control-label">Encargado</label>
 						<form:select id="idEncargado" path="idEncargado"	class="form-control" 
-						items="${usuario}" itemLabel="NombreCompleto" itemValue="idUsuario" />
+						items="${usuario}" itemLabel="nombreCompleto" itemValue="idUsuario" />
 					</div>
 				</div>
 				
@@ -153,7 +153,7 @@
 			<div class="row">
 				<div class="col-sm-6">
 					<div class="form-group">
-						<label for="asunto">asunto</label>
+						<label for="asunto">Asunto</label>
 						<form:textarea class="form-control" rows="5"
 							path="asunto" id="asunto"></form:textarea>
 					</div>

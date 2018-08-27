@@ -59,7 +59,7 @@
 			<div class="row">
 				<div class="col-sm-3">
 					<div class="form-group">
-						<label for="nombre">nombre</label>
+						<label for="nombre">Nombre</label>
 						<form:hidden path="idUsuario" />
 						<form:input type="text" class="form-control" path="nombre"
 							id="nombre" required="required" />
@@ -67,7 +67,7 @@
 				</div>
 				<div class="col-sm-3">
 					<div class="form-group">
-						<label for="apellidoP">apellidoP</label>
+						<label for="apellidoP">Primer apellido</label>
 						<form:input type="text" class="form-control" path="apellidoP"
 							id="apellidoP" required="required" />
 					</div>
@@ -75,7 +75,7 @@
 
 				<div class="col-sm-3">
 					<div class="form-group">
-						<label for="maternoM">maternoM</label>
+						<label for="maternoM">Segundo apellido</label>
 						<form:input type="text" class="form-control" path="maternoM"
 							id="maternoM" required="required" />
 					</div>
@@ -88,7 +88,7 @@
 
 				<div class="col-sm-3">
 					<div class="form-group">
-						<label for=cargo>cargo</label>
+						<label for=cargo>Cargo</label>
 						<form:input type="text" class="form-control" path="cargo"
 							id="cargo" required="required" />
 					</div>
