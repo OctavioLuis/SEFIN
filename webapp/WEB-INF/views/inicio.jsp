@@ -28,20 +28,16 @@
 	<!-- Fixed navbar -->
 	<jsp:include page="includes/menu.jsp"></jsp:include>
 	<div class="container theme-showcase" role="main">
-
-		
-
-		<a href="${urlDocPdf}" class="btn btn-success" role="button"
-			title="Nueva Pelicula">Documentos pdf</a><br> <br>
-			
-			<a href="${urlCreate}" class="btn btn-success" role="button"
-			title="Nueva Pelicula">Documentos compartidos</a><br> <br>
-			
-			<a href="${urlUsuario}" class="btn btn-success" role="button"
-			title="Nueva Pelicula">Trabajadores</a><br> <br>
-
 	
-
+	<div class="row" >
+		<div class="col-md-4 "><a href="${urlDocPdf}" class="btn btn-success " role="button"
+			title="Nueva Pelicula">Documentos pdf</a><br> <br></div>
+		<div class="col-md-4"><a href="${urlCreate}" class="btn btn-success" role="button"
+			title="Nueva Pelicula">Documentos compartidos</a><br> <br></div>
+		<div class="col-md-4"><a href="${urlUsuario}" class="btn btn-success" role="button"
+			title="Nueva Pelicula">Trabajadores</a><br> <br></div>			
+	</div>
+		
 		<hr class="featurette-divider">
 
 		<!-- FOOTER -->
