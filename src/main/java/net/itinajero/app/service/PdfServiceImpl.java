@@ -37,9 +37,9 @@ public class PdfServiceImpl implements IPdfService{
 		
 	}
 	@Override
-	public List<DocumentoPdf> buscarporFecha(Date fecha) {
+	public List<DocumentoPdf> buscarporFecha(Date fecha, Date fecha2) {
 		// TODO Auto-generated method stub
-		return pdfRepo.findByFecha(fecha);
+		return pdfRepo.findByFecha(fecha, fecha2 );
 	}
 	@Override
 	public List<DocumentoPdf> buscarporFolio(String folio) {

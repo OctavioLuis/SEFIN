@@ -10,6 +10,6 @@ public interface IPdfService {
 	void insertar(DocumentoPdf docPdf);
 	DocumentoPdf buscarPorId(int idDocumento);
 	void eliminar(int idDocumento);
-	List<DocumentoPdf> buscarporFecha(Date fecha);
+	List<DocumentoPdf> buscarporFecha(Date fecha, Date fecha2);
 	List<DocumentoPdf> buscarporFolio(String folio);
 }

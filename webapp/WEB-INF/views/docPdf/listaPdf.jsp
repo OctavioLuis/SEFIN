@@ -33,77 +33,94 @@
 	<jsp:include page="../includes/menu.jsp"></jsp:include>
 
 
-<div class="container theme-showcase" role="main">
-<div class="table-responsive">
-	<div class="row">
-		<div class="col-sm-3">
-		
-		
-			<form class="form-inline" action="${urlRoot}pdf/searchByFolio" method="post">
+	<div class="container theme-showcase" role="main">
+		<div class="table-responsive">
+			<div class="row">
+				<div class="col-sm-3">
 
 
-				<div class="form-group">
-					<label for="folio">Buscar por folio</label> <input type="text"
-						class="form-control" name="folio" id="folio"
-						required="required" />
+					<form class="form-inline" action="${urlRoot}pdf/searchByFolio"
+						method="post">
+
+
+						<div class="form-group">
+							<label for="folio">Buscar por folio</label> <input type="text"
+								class="form-control" name="folio" id="folio" required="required" />
+						</div>
+
+
+
+
+						<button type="submit" class="btn btn-primary">Filtrar</button>
+					</form>
 				</div>
 
+				<div class="col-sm-3">
+					<form class="form-inline" action="${urlRoot}pdf/searchByDateEmisio"
+						method="post">
 
 
+						<label for="fechaBusqueda">Busqueda por fecha de emisión</label>
 
-				<button type="submit" class="btn btn-primary">Filtrar</button>
-			</form>
-		</div>
-		
-		<div class="col-sm-3">
-			<form class="form-inline" action="${urlRoot}pdf/searchByDate" method="post">
+						<div class="form-group">
+							<label for="fechaBusqueda">de</label> <input type="text"
+								class="form-control" name="fechaBusqueda" id="fechaBusqueda"
+								required="required" />
+						</div>
+						<div class="col-sm-3">
+							<div class="form-group">
+								<label for="fechaBusqueda2">A</label> <input type="text"
+									class="form-control" name="fechaBusqueda2" id="fechaBusqueda2"
+									required="required" />
+							</div>
+
+							<button type="submit" class="btn btn-primary">Filtrar</button>
+						</div>
 
 
-
-
-				<div class="form-group">
-					<label for="fechaBusqueda">Buscar por fecha</label> <input
-						type="text" class="form-control" name="fechaBusqueda"
-						id="fechaBusqueda" required="required" />
+						<!-- 				<button type="submit" class="btn btn-primary">Filtrar</button> -->
+					</form>
 				</div>
+				
+				
 
 
-				<button type="submit" class="btn btn-primary">Filtrar</button>
-			</form>
-		</div>
-		
-		
-		<div class="col-sm-3">
-		
-		<a href="${urllistar}" class="btn btn-success" role="button"
-			title="Nueva Pelicula">Ver todos los documentos</a><br> <br>
-		</div>
-	</div>
+				<div class="col-sm-3">
 
-	
+					<a href="${urllistar}" class="btn btn-success" role="button"
+						title="Nueva Pelicula">Ver todos los documentos</a><br> <br>
+				</div>
+			</div>
 
-		<h3>Listado de documentos</h3>
-		<c:if test="${msg!=null }">
-			<div class='alert alert-success' role="alert">${ msg }</div>
-		</c:if>
 
-		<a href="${urlCreate}" class="btn btn-success" role="button"
-			title="Nueva Pelicula">Nuevo documento</a><br> <br>
+
+			<h3>Listado de documentos</h3>
+			<c:if test="${msg!=null }">
+				<div class='alert alert-success' role="alert">${ msg }</div>
+			</c:if>
+
+			<a href="${urlCreate}" class="btn btn-success" role="button"
+				title="Nueva Pelicula">Nuevo documento</a><br> <br>
 
 
 
 
-		
+
 			<table class="table table-hover table-striped table-bordered">
 				<tr>
-					<th>folio</th>
+					<th>Folio/Oficio</th>
 					<th>Nombre del emisor</th>
-					<th>Fecha de creación</th>
+					<th>Dependencia emisora</th>
+					<th>Fecha de emisión</th>
+					<th>Fecha de recibido</th>
+					<th>Quien recibió</th>
+					<th>Fecha de modificación/Turnado</th>
 					<th>Quien modifico</th>
-					<th>Fecha de modificación</th>
-					<th>Asunto</th>
 					<th>Tipo de documento</th>
-					<th>Encargado</th>
+					<th>Asunto</th>
+
+
+
 					<th>Archivo</th>
 					<th>Opciones</th>
 					<th>Ver</th>
@@ -112,24 +129,31 @@
 					<tr>
 						<td>${pdf.folio}</td>
 						<td>${pdf.nombreEmisor}</td>
+						<td>${pdf.dependenciaEmisor}</td>
+
 						<td><fmt:formatDate value="${pdf.fechaEntrada}"
 								pattern="dd-MM-yyyy" /></td>
-						<c:forEach items="${usuario}" var="us">
-							<c:if test="${us.idUsuario==pdf.quienModifico}">
-								<td>${us.nombreCompleto}</td>
-							</c:if>
-						</c:forEach>
-						<%-- 						<td>${pdf.quienModifico}</td> --%>
-						<td><fmt:formatDate value="${pdf.fechaModificacion}"
+
+						<td><fmt:formatDate value="${pdf.fechaRecibida}"
 								pattern="dd-MM-yyyy" /></td>
-						<td>${pdf.asunto}</td>
-						<td>${pdf.tipo}</td>
+
 						<c:forEach items="${usuario}" var="us">
 							<c:if test="${us.idUsuario==pdf.idEncargado}">
 								<td>${us.nombreCompleto}</td>
 							</c:if>
 						</c:forEach>
-						<%-- 						<td>${pdf.idEncargado}</td> --%>
+
+						<td><fmt:formatDate value="${pdf.fechaModificacion}"
+								pattern="dd-MM-yyyy" /></td>
+						
+
+						<c:forEach items="${usuario}" var="us">
+							<c:if test="${us.idUsuario==pdf.quienModifico}">
+								<td>${us.nombreCompleto}</td>
+							</c:if>
+						</c:forEach>
+						<td>${pdf.tipo}</td>
+						<td>${pdf.asunto}</td>
 						<td>${pdf.content}</td>
 						<td><a href="${urlEdit}/${pdf.idDucumento}"
 							class="btn btn-success btn-sm" role="button" title="Edit"><span
@@ -176,6 +200,12 @@
 
 		$(function() {
 			$("#fechaEntrada").datepicker({
+				dateFormat : 'dd-mm-yy'
+			});
+		});
+
+		$(function() {
+			$("#fechaBusqueda2").datepicker({
 				dateFormat : 'dd-mm-yy'
 			});
 		});

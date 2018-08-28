@@ -36,20 +36,19 @@ public class PdfController {
 
 	@Autowired
 	private IPdfService servicePdf;
-	
+
 	@Autowired
 	private IUsuarioService serviceUsuario;
 
-
 	@RequestMapping(value = "/crear", method = RequestMethod.GET)
 	public String formPdf(@ModelAttribute DocumentoPdf documentoPdf, Model model) {
-		model.addAttribute("usuario", serviceUsuario.buscarTodas());		
+		model.addAttribute("usuario", serviceUsuario.buscarTodas());
 		return "docPdf/formPdf";
 	}
 
 	@PostMapping("/save")
 	public String guardar(@ModelAttribute DocumentoPdf documentoPdf, BindingResult result,
-			RedirectAttributes attributes, @RequestParam("file") MultipartFile file) {
+			RedirectAttributes attributes, @RequestParam("file") MultipartFile file, HttpServletResponse response) {
 
 		if (result.hasErrors()) {
 			System.out.println("Existieron errores");
@@ -71,9 +70,22 @@ public class PdfController {
 				documentoPdf.setFilename(file.getOriginalFilename());
 				documentoPdf.setContentType(file.getContentType());
 				documentoPdf.setContent(destFile);
+				System.out.println("Nuevo pero si cargo archivo");
 			} catch (Exception e) {
 				// TODO: handle exception
 			}
+		} else {
+			if (documentoPdf.getIdDucumento() == 0) {
+				System.out.println("Nuevo pero no cargo archivo");
+			} else {
+
+				DocumentoPdf doc = servicePdf.buscarPorId(documentoPdf.getIdDucumento());
+				documentoPdf.setContent(doc.getContent());
+				documentoPdf.setFilename(doc.getFilename());
+				documentoPdf.setContentType(doc.getContentType());
+				System.out.println("Actualizar");
+			}
+
 		}
 
 		servicePdf.insertar(documentoPdf);
@@ -91,6 +103,7 @@ public class PdfController {
 	@GetMapping(value = "/edit/{idDucumento}")
 	public String editar(@PathVariable("idDucumento") int idDucumento, Model model) {
 		DocumentoPdf pdf = servicePdf.buscarPorId(idDucumento);
+		System.out.println("lo que trae al momento de actualizar" + pdf);
 		model.addAttribute("documentoPdf", pdf);
 		model.addAttribute("usuario", serviceUsuario.buscarTodas());
 		return "docPdf/formPdf";
@@ -102,23 +115,23 @@ public class PdfController {
 		servicePdf.eliminar(idDocumento);
 		return "redirect:/pdf/lista";
 	}
-	
-	@RequestMapping(value="/searchByDate", method=RequestMethod.POST)
-	public String buscarPorFecha(@RequestParam("fechaBusqueda") Date fechaBusqueda, Model model) {
-		System.out.println("Fecha busqueda: "+fechaBusqueda);
-		model.addAttribute("documentoPdf", servicePdf.buscarporFecha(fechaBusqueda));
+
+	@RequestMapping(value = "/searchByDateEmisio", method = RequestMethod.POST)
+	public String buscarPorFechaEmision(@RequestParam("fechaBusqueda") Date fechaBusqueda,
+			@RequestParam("fechaBusqueda2") Date fechaBusqueda2, Model model) {
+		System.out.println("Fecha busqueda: " + fechaBusqueda);
+		model.addAttribute("documentoPdf", servicePdf.buscarporFecha(fechaBusqueda, fechaBusqueda2));
 		model.addAttribute("usuario", serviceUsuario.buscarTodas());
 		return "docPdf/listaPdf";
 	}
-	
-	@RequestMapping(value="/searchByFolio", method=RequestMethod.POST)
+
+	@RequestMapping(value = "/searchByFolio", method = RequestMethod.POST)
 	public String buscarPorFolio(@RequestParam("folio") String folio, Model model) {
-		System.out.println("Fecha busqueda: "+folio);
+		System.out.println("Fecha busqueda: " + folio);
 		model.addAttribute("documentoPdf", servicePdf.buscarporFolio(folio));
 		model.addAttribute("usuario", serviceUsuario.buscarTodas());
 		return "docPdf/listaPdf";
 	}
-	
 
 	@RequestMapping("/download/{idDucumento}")
 	public String download(@PathVariable("idDucumento") int idDocumento, HttpServletResponse response) {

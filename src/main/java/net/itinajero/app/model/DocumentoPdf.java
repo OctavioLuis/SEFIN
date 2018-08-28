@@ -1,7 +1,6 @@
 package net.itinajero.app.model;
 
 import java.io.File;
-import java.sql.Blob;
 import java.util.Date;
 
 import javax.persistence.Basic;
@@ -28,6 +27,8 @@ public class DocumentoPdf {
     private String  asunto;
     private String tipo;
     private int idEncargado;
+    private Date fechaRecibida =new Date(); ;
+    private String dependenciaEmisor;
     
     @Lob @Basic(fetch = FetchType.LAZY)
     private File content;
@@ -125,13 +126,32 @@ public class DocumentoPdf {
 		this.contentType = contentType;
 	}
 
+	public Date getFechaRecibida() {
+		return fechaRecibida;
+	}
+
+	public void setFechaRecibida(Date fechaRecibida) {
+		this.fechaRecibida = fechaRecibida;
+	}
+
+	public String getDependenciaEmisor() {
+		return dependenciaEmisor;
+	}
+
+	public void setDependenciaEmisor(String dependenciaEmisor) {
+		this.dependenciaEmisor = dependenciaEmisor;
+	}
+
 	@Override
 	public String toString() {
 		return "DocumentoPdf [idDucumento=" + idDucumento + ", folio=" + folio + ", nombreEmisor=" + nombreEmisor
 				+ ", fechaEntrada=" + fechaEntrada + ", quienModifico=" + quienModifico + ", fechaModificacion="
 				+ fechaModificacion + ", asunto=" + asunto + ", tipo=" + tipo + ", idEncargado=" + idEncargado
-				+ ", content=" + content + ", filename=" + filename + ", contentType=" + contentType + "]";
+				+ ", fechaRecibida=" + fechaRecibida + ", dependenciaEmisor=" + dependenciaEmisor + ", content="
+				+ content + ", filename=" + filename + ", contentType=" + contentType + "]";
 	}
+
+	
 
 	
 

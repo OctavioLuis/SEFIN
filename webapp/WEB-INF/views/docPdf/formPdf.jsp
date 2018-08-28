@@ -60,7 +60,7 @@
 			<div class="row">
 				<div class="col-sm-3">
 					<div class="form-group">
-						<label for="titulo">Folio</label>
+						<label for="titulo">Folio/Oficio</label>
 						<form:hidden path="idDucumento" />
 						<form:input type="text" class="form-control" path="folio"
 							id="folio" required="required" />
@@ -68,42 +68,55 @@
 				</div>
 				<div class="col-sm-3">
 					<div class="form-group">
-						<label for="nombreEmisor">Nombre del Emisor</label>
+						<label for="nombreEmisor">Nombre  emisor</label>
 						<form:input type="text" class="form-control" path="nombreEmisor"
 							id="nombreEmisor" required="required" />
 					</div>
 				</div>
+				
+				<div class="col-sm-3">
+					<div class="form-group">
+						<label for="dependenciaEmisor">Dependencia  emisora</label>
+						<form:input type="text" class="form-control" path="dependenciaEmisor"
+							id="dependenciaEmisor" required="required" />
+					</div>
+				</div>
 
 				<div class="col-sm-3">
 					<div class="form-group">
-						<label for="fechaEntrada">Fecha de entrada</label> <form:input type="text"
+						<label for="fechaEntrada">Fecha de emisión</label> <form:input type="text"
 							class="form-control" path="fechaEntrada" id="fechaEntrada"
 							required="required" />
 					</div>
 				</div>
+				
+					
+				
+				
 			</div>
 
 			<div class="row">
-
-<!-- 				<div class="col-sm-3"> -->
-<!-- 					<div class="form-group"> -->
-<!-- 						<label for=quienModifico>quien Modifico</label> -->
-<%-- 						<form:input type="text" class="form-control" path="quienModifico" --%>
-<%-- 							id="quienModifico" required="required" /> --%>
-<!-- 					</div> -->
-<!-- 				</div> -->
+			<div class="col-sm-3">
+					<div class="form-group">
+						<label for="fechaRecibida">Fecha de recibido</label> <form:input type="text"
+							class="form-control" path="fechaRecibida" id="fechaRecibida"
+							required="required" />
+					</div>
+				</div>
+				
+				
 				
 				<div class="col-sm-3">
 					<div class="form-group">
-						<label for="quienModifico" class="control-label">Quien modifico</label>
-						<form:select id="quienModifico" path="quienModifico"	class="form-control" 
-						items="${usuario}" itemLabel="NombreCompleto" itemValue="idUsuario" />
+						<label for="idEncargado" class="control-label">Quien recibió</label>
+						<form:select id="idEncargado" path="idEncargado"	class="form-control" 
+						items="${usuario}" itemLabel="nombreCompleto" itemValue="idUsuario" />
 					</div>
 				</div>
 
 				<div class="col-sm-3">
 					<div class="form-group">
-						<label for="fechaModificacion">Fecha de modificación</label> <form:input type="text"
+						<label for="fechaModificacion">Fecha de modificación/Turnado</label> <form:input type="text"
 							class="form-control" path="fechaModificacion" id="fechaEstreno"
 							required="required" />
 					</div>
@@ -131,20 +144,21 @@
 
 				
 				
+				
+				
 				<div class="col-sm-3">
 					<div class="form-group">
-						<label for="idEncargado" class="control-label">Encargado</label>
-						<form:select id="idEncargado" path="idEncargado"	class="form-control" 
-						items="${usuario}" itemLabel="nombreCompleto" itemValue="idUsuario" />
+						<label for="quienModifico" class="control-label">Quien modifico</label>
+						<form:select id="quienModifico" path="quienModifico"	class="form-control" 
+						items="${usuario}" itemLabel="NombreCompleto" itemValue="idUsuario" />
 					</div>
 				</div>
 				
-
 				<div class="col-sm-3">
 					<div class="form-group">
-						<label for="imagen">Archivo</label>
-						<!-- 						<hidden name="imagen" /> -->
-						<input type="file" name="file" id="file" required="required"></input>
+						<label for="file">Archivo</label>
+<%-- 												<form:hidden path="content" /> --%>
+						<input type="file" name="file" id="file" ></input>
 						<p class="help-block">Documento a guardar</p>
 					</div>
 				</div>
@@ -190,6 +204,12 @@
 		
 		$(function() {
 			$("#fechaEntrada").datepicker({
+				dateFormat : 'dd-mm-yy'
+			});
+		});
+		fechaRecibida
+		$(function() {
+			$("#fechaRecibida").datepicker({
 				dateFormat : 'dd-mm-yy'
 			});
 		});
