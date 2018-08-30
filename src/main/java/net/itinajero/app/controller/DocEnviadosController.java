@@ -54,39 +54,29 @@ public class DocEnviadosController {
 			RedirectAttributes attributes, @RequestParam("file") MultipartFile file, HttpServletResponse response) {
 
 		if (result.hasErrors()) {
-			System.out.println("Existieron errores");
 			return "docPdf/formPdf";
 		}
 		if (!file.isEmpty()) {
-			// Session session = (Session)entityManager.getDelegate();
-
-			System.out.println("File:" + file.getOriginalFilename());
-			System.out.println("ContentType:" + file.getContentType());
 			try {
 
 				File destFile = new File(file.getOriginalFilename());
 				FileUtils.copyInputStreamToFile(file.getInputStream(), destFile);
-				// Blob blob=Hibernate.getLobCreator(sessionfactory.getCurrentSession ()).
-				// CreateBlob(file.getInputStream());
-				// Blob newContent = session.getLobHelper().createBlob(file.getInputStream(),
-				// file.getSize());
 				documentoEnviado.setFilename(file.getOriginalFilename());
 				documentoEnviado.setContentType(file.getContentType());
-				documentoEnviado.setContent(destFile);
-				System.out.println("Nuevo pero si cargo archivo");
+				documentoEnviado.setContent(destFile);				
 			} catch (Exception e) {
 				// TODO: handle exception
 			}
 		} else {
 			if (documentoEnviado.getIdDucumento() == 0) {
-				System.out.println("Nuevo pero no cargo archivo");
+				
 			} else {
 
-				 DocumentoEnviado doc = serviceDocEnviado.buscarPorId(documentoEnviado.getIdDucumento());
-				 documentoEnviado.setContent(doc.getContent());
-				 documentoEnviado.setFilename(doc.getFilename());
-				 documentoEnviado.setContentType(doc.getContentType());
-				System.out.println("Actualizar");
+				DocumentoEnviado doc = serviceDocEnviado.buscarPorId(documentoEnviado.getIdDucumento());
+				documentoEnviado.setContent(doc.getContent());
+				documentoEnviado.setFilename(doc.getFilename());
+				documentoEnviado.setContentType(doc.getContentType());
+				
 			}
 
 		}
@@ -102,24 +92,24 @@ public class DocEnviadosController {
 		model.addAttribute("usuario", serviceUsuario.buscarTodas());
 		return "docEnviado/listaDocEnviado";
 	}
-	
-	
-	@RequestMapping(value= "/lista2", method = RequestMethod.POST)
+
+	@RequestMapping(value = "/lista2", method = RequestMethod.POST)
 	public String mostrarPdfPorUsEmitio(Model model, HttpServletRequest request) {
-		model.addAttribute("documentoEnviado", serviceDocEnviado.buscarporIdUsuarioEmisor(Integer.parseInt(request.getParameter("quienElaboro"))));
+		model.addAttribute("documentoEnviado",
+				serviceDocEnviado.buscarporIdUsuarioEmisor(Integer.parseInt(request.getParameter("quienElaboro"))));
 		model.addAttribute("usuario", serviceUsuario.buscarTodas());
-		model.addAttribute("usuarioconectado", request.getParameter("quienElaboro"));		
+		model.addAttribute("usuarioconectado", request.getParameter("quienElaboro"));
 		return "docEnviado/listaDocEnviado";
 	}
-	
-	@RequestMapping(value= "/lista3", method = RequestMethod.POST)
+
+	@RequestMapping(value = "/lista3", method = RequestMethod.POST)
 	public String mostrarPdfPorUsModifica(Model model, HttpServletRequest request) {
-		model.addAttribute("documentoEnviado", serviceDocEnviado.buscarporIdUsuarioElaboro(Integer.parseInt(request.getParameter("quienElaboro"))));
+		model.addAttribute("documentoEnviado",
+				serviceDocEnviado.buscarporIdUsuarioElaboro(Integer.parseInt(request.getParameter("quienElaboro"))));
 		model.addAttribute("usuario", serviceUsuario.buscarTodas());
-		model.addAttribute("usuarioconectado", request.getParameter("quienElaboro"));		
+		model.addAttribute("usuarioconectado", request.getParameter("quienElaboro"));
 		return "docEnviado/listaDocEnviado";
 	}
-	
 
 	@GetMapping(value = "/edit/{idDucumento}")
 	public String editar(@PathVariable("idDucumento") int idDucumento, Model model) {
@@ -135,25 +125,25 @@ public class DocEnviadosController {
 		serviceDocEnviado.eliminar(idDocumento);
 		return "redirect:/docenviado/lista";
 	}
-	
+
 	@RequestMapping(value = "/searchByDateEmisio", method = RequestMethod.POST)
 	public String buscarPorFechaEmision(@RequestParam("fechaBusqueda") Date fechaBusqueda,
-			@RequestParam("fechaBusqueda2") Date fechaBusqueda2, Model model) {		
+			@RequestParam("fechaBusqueda2") Date fechaBusqueda2, Model model) {
 		model.addAttribute("documentoEnviado", serviceDocEnviado.buscarporFechaEmision(fechaBusqueda, fechaBusqueda2));
 		model.addAttribute("usuario", serviceUsuario.buscarTodas());
 		return "docEnviado/listaDocEnviado";
 	}
-	
+
 	@RequestMapping(value = "/searchByDateSalida", method = RequestMethod.POST)
 	public String buscarPorFechaRecibido(@RequestParam("fechaBusquedaS") Date fechaBusqueda,
-			@RequestParam("fechaBusquedaS2") Date fechaBusqueda2, Model model) {		
+			@RequestParam("fechaBusquedaS2") Date fechaBusqueda2, Model model) {
 		model.addAttribute("documentoEnviado", serviceDocEnviado.buscarporFechaSalida(fechaBusqueda, fechaBusqueda2));
 		model.addAttribute("usuario", serviceUsuario.buscarTodas());
 		return "docEnviado/listaDocEnviado";
 	}
-	
+
 	@RequestMapping(value = "/searchByFolio", method = RequestMethod.POST)
-	public String buscarPorFolio(@RequestParam("folio") String folio, Model model) {		
+	public String buscarPorFolio(@RequestParam("folio") String folio, Model model) {
 		model.addAttribute("documentoEnviado", serviceDocEnviado.buscarporFolio(folio));
 		model.addAttribute("usuario", serviceUsuario.buscarTodas());
 		return "docEnviado/listaDocEnviado";
@@ -178,7 +168,7 @@ public class DocEnviadosController {
 
 		return null;
 	}
-	
+
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");

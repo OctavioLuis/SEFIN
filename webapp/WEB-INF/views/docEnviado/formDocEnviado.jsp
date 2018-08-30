@@ -66,18 +66,11 @@
 					</div>
 				</div>
 				
-				
-<!-- 				<div class="col-sm-3"> -->
-<!-- 					<div class="form-group"> -->
-<!-- 						<label for="nombreEmisor">Nombre  emisor</label> -->
-<%-- 						<form:input type="text" class="form-control" path="nombreEmisor" --%>
-<%-- 							id="nombreEmisor" required="required" /> --%>
-<!-- 					</div> -->
-<!-- 				</div> -->
+
 				
 				<div class="col-sm-3">
 					<div class="form-group">
-						<label for="nombreEmisor" class="control-label">Nombre  emisor</label>
+						<label for="nombreEmisor" class="control-label">Nombre del emisor</label>
 						<form:select id="quienElaboro" path="nombreEmisor"	class="form-control" 
 						items="${usuario}" itemLabel="nombreCompleto" itemValue="idUsuario" />
 					</div>
@@ -85,7 +78,7 @@
 
 			<div class="col-sm-3">
 					<div class="form-group">
-						<label for="quienElaboro" class="control-label">uienElaboro</label>
+						<label for="quienElaboro" class="control-label">Quien elaboro el documento</label>
 						<form:select id="quienElaboro" path="quienElaboro"	class="form-control" 
 						items="${usuario}" itemLabel="nombreCompleto" itemValue="idUsuario" />
 					</div>
@@ -109,7 +102,7 @@
 			
 			<div class="col-sm-3">
 					<div class="form-group">
-						<label for="fechaSalida">fechaSalida</label> <form:input type="text"
+						<label for="fechaSalida">fecha de envio</label> <form:input type="text"
 							class="form-control" path="fechaSalida" id="fechaSalida"
 							required="required" />
 					</div>
@@ -117,7 +110,7 @@
 				
 			<div class="col-sm-3">
 					<div class="form-group">
-						<label for="fechaRecepcion">Fecha de fechaRecepcion</label> <form:input type="text"
+						<label for="fechaRecepcion">Fecha recepción</label> <form:input type="text"
 							class="form-control" path="fechaRecepcion" id="fechaRecepcion"
 							required="required" />
 					</div>
@@ -125,7 +118,7 @@
 				
 				<div class="col-sm-3">
 					<div class="form-group">
-						<label for="dependenciaReceptora">dependenciaReceptora</label>
+						<label for="dependenciaReceptora">Dependencia receptora</label>
 						<form:input type="text" class="form-control" path="dependenciaReceptora"
 							id="tipo"  />
 					</div>

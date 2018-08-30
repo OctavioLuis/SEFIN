@@ -32,7 +32,7 @@
 
 		<div class="page-header">
 			<h3 class="blog-title">
-				<span class="label label-success">Datos</span>
+				<span class="label label-success">Datos de los documentos recibidos</span>
 			</h3>
 		</div>
 		

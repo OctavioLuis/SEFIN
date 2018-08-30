@@ -40,7 +40,7 @@
 		
 			<div class="row">
 				<div class="col-sm-3">
-					<form class="form-inline" action="${urlRoot}pdf/searchByFolio"
+					<form  action="${urlRoot}pdf/searchByFolio"
 						method="post">
 						<div class="form-group">
 							<label for="folio">Buscar por folio</label> <input type="text"

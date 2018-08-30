@@ -31,8 +31,7 @@ public class UsuarioController {
 	@PostMapping("/save")
 	public String guardar(@ModelAttribute Usuario usuario, BindingResult result, RedirectAttributes attributes) {
 		
-		if (result.hasErrors()) {
-			System.out.println("Existieron errores");
+		if (result.hasErrors()) {			
 			return "docPdf/formUsuario";
 		}
 		usuario.setNombreCompleto(usuario.getNombre()+" "+usuario.getApellidoP()+" "+usuario.getMaternoM());

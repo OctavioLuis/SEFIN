@@ -75,7 +75,7 @@
 				<div class="col-sm-3">
 					<form class="form-inline" action="${urlRoot}docenviado/searchByDateSalida"
 						method="post">
-						<label for="fechaBusqueda">Busqueda por fecha de recibido</label>
+						<label for="fechaBusqueda">Busqueda por fecha de salida</label>
 						<div class="form-group">
 							<label for="fechaBusquedaS">de</label> <input type="text"
 								class="form-control" name="fechaBusquedaS" id="fechaBusquedaS"
@@ -102,7 +102,7 @@
 
 
 
-			<h3>Listado de documentos</h3>
+			<h3>Listado de documentos enviados</h3>
 			<c:if test="${msg!=null }">
 				<div class='alert alert-success' role="alert">${ msg }</div>
 			</c:if>
@@ -125,7 +125,7 @@
 					<th>Quien elaboro</th>
 					<th>Fecha de emisión</th>
 					<th>Fecha de salida</th>
-					<th>Fecha de resepcion</th>
+					<th>Fecha de recepción</th>
 					<th>Dependencia receptora</th>					
 					<th>Tipo de documento</th>
 					<th>Asunto</th>
