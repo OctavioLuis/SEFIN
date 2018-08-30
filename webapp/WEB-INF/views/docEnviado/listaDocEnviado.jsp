@@ -10,14 +10,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
-<title>Listado de Docuemnto recibidos</title>
+<title>Listado de Docuemnto</title>
 
 <spring:url value="/resources" var="urlPublic"></spring:url>
 <spring:url value="/" var="urlRoot"></spring:url>
-<spring:url value="/pdf/crear" var="urlCreate" />
-<spring:url value="/pdf/edit" var="urlEdit" />
-<spring:url value="/pdf/lista" var="urllistar" />
-<spring:url value="/pdf/delete" var="urlDelete" />
+<spring:url value="/docenviado/crear" var="urlCreate" />
+<spring:url value="/docenviado/edit" var="urlEdit" />
+<spring:url value="/docenviado/lista" var="urllistar" />
+<spring:url value="/docenviado/delete" var="urlDelete" />
 
 <link href="${urlPublic}/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -40,7 +40,7 @@
 		
 			<div class="row">
 				<div class="col-sm-3">
-					<form class="form-inline" action="${urlRoot}pdf/searchByFolio"
+					<form class="form-inline" action="${urlRoot}docenviado/searchByFolio"
 						method="post">
 						<div class="form-group">
 							<label for="folio">Buscar por folio</label> <input type="text"
@@ -51,7 +51,7 @@
 				</div>
 				
 				<div class="col-sm-3">
-					<form class="form-inline" action="${urlRoot}pdf/searchByDateEmisio"
+					<form class="form-inline" action="${urlRoot}docenviado/searchByDateEmisio"
 						method="post">
 						<label for="fechaBusqueda">Busqueda por fecha de emisión</label>
 						<div class="form-group">
@@ -73,18 +73,18 @@
 				</div>		
 				
 				<div class="col-sm-3">
-					<form class="form-inline" action="${urlRoot}pdf/searchByDateResibido"
+					<form class="form-inline" action="${urlRoot}docenviado/searchByDateSalida"
 						method="post">
 						<label for="fechaBusqueda">Busqueda por fecha de recibido</label>
 						<div class="form-group">
-							<label for="fechaBusquedaR">de</label> <input type="text"
-								class="form-control" name="fechaBusquedaR" id="fechaBusquedaR"
+							<label for="fechaBusquedaS">de</label> <input type="text"
+								class="form-control" name="fechaBusquedaS" id="fechaBusquedaS"
 								required="required" />
 						</div>
 						<div class="col-sm-3">
 							<div class="form-group">
-								<label for="fechaBusquedaR2">A</label> <input type="text"
-									class="form-control" name="fechaBusquedaR2" id="fechaBusquedaR2"
+								<label for="fechaBusquedaS2">A</label> <input type="text"
+									class="form-control" name="fechaBusquedaS2" id="fechaBusquedaS2"
 									required="required" />
 							</div>
 
@@ -102,7 +102,7 @@
 
 
 
-			<h3>Listado de documentos recibidos</h3>
+			<h3>Listado de documentos</h3>
 			<c:if test="${msg!=null }">
 				<div class='alert alert-success' role="alert">${ msg }</div>
 			</c:if>
@@ -122,12 +122,11 @@
 				<tr>
 					<th>Folio/Oficio</th>
 					<th>Nombre del emisor</th>
-					<th>Dependencia emisora</th>
+					<th>Quien elaboro</th>
 					<th>Fecha de emisión</th>
-					<th>Fecha de recibido</th>
-					<th>Quien recibió</th>
-					<th>Fecha de modificación/Turnado</th>
-					<th>Quien modifico</th>
+					<th>Fecha de salida</th>
+					<th>Fecha de resepcion</th>
+					<th>Dependencia receptora</th>					
 					<th>Tipo de documento</th>
 					<th>Asunto</th>
 
@@ -137,26 +136,42 @@
 					<th>Opciones</th>
 					<th>Ver</th>
 				</tr>
-				<c:forEach items="${documentoPdf}" var="pdf">
+				<c:forEach items="${documentoEnviado}" var="docEnviado">
 					<tr>
-						<td>${pdf.folio}</td>
-						<td>${pdf.nombreEmisor}</td>
-						<td>${pdf.dependenciaEmisor}</td>
+						<td>${docEnviado.folio}</td>
+						<c:forEach items="${usuario}" var="us">
+							<c:if test="${us.idUsuario==docEnviado.nombreEmisor}">
+								<td>${us.nombreCompleto}</td>
+							</c:if>
+						</c:forEach>
+						
+						<c:forEach items="${usuario}" var="us">
+							<c:if test="${us.idUsuario==docEnviado.quienElaboro}">
+								<td>${us.nombreCompleto}</td>
+							</c:if>
+						</c:forEach>
+						
+						
 
-						<td><fmt:formatDate value="${pdf.fechaEntrada}"
+						<td><fmt:formatDate value="${docEnviado.fechaEmision}"
 								pattern="dd-MM-yyyy" /></td>
 
-						<td><fmt:formatDate value="${pdf.fechaRecibida}"
+						<td><fmt:formatDate value="${docEnviado.fechaSalida}"
 								pattern="dd-MM-yyyy" /></td>
+								
+								<td><fmt:formatDate value="${docEnviado.fechaRecepcion}"
+								pattern="dd-MM-yyyy" /></td>
+								
+								<td>${docEnviado.dependenciaReceptora}</td>
 
+<!-- 
 						<c:forEach items="${usuario}" var="us">
 							<c:if test="${us.idUsuario==pdf.idEncargado}">
 								<td>${us.nombreCompleto}</td>
 							</c:if>
 						</c:forEach>
 
-						<td><fmt:formatDate value="${pdf.fechaModificacion}"
-								pattern="dd-MM-yyyy" /></td>
+						
 						
 
 						<c:forEach items="${usuario}" var="us">
@@ -164,18 +179,19 @@
 								<td>${us.nombreCompleto}</td>
 							</c:if>
 						</c:forEach>
-						<td>${pdf.tipo}</td>
-						<td>${pdf.asunto}</td>
-						<td>${pdf.content}</td>
-						<td><a href="${urlEdit}/${pdf.idDucumento}"
+	 -->					
+						<td>${docEnviado.tipo}</td>
+						<td>${docEnviado.asunto}</td>
+						<td>${docEnviado.content}</td>
+						<td><a href="${urlEdit}/${docEnviado.idDucumento}"
 							class="btn btn-success btn-sm" role="button" title="Edit"><span
 								class="glyphicon glyphicon-pencil"></span></a> <a
-							href="${urlDelete}/${pdf.idDucumento}"
+							href="${urlDelete}/${docEnviado.idDucumento}"
 							onclick="return confirm('¿Esta seguro de eliminar el documento?')"
 							class="btn btn-danger btn-sm" role="button" title="Eliminar"><span
 								class="glyphicon glyphicon-trash"></span></a></td>
 						<td><a
-							href="${pageContext.request.contextPath}/pdf/download/${pdf.idDucumento}">
+							href="${pageContext.request.contextPath}/docenviado/download/${docEnviado.idDucumento}">
 								<img src="${urlPublic}/images/save_icon.gif" border="0"
 								title="Download this document" />
 						</a></td>
@@ -223,13 +239,13 @@
 		});
 		
 		$(function() {
-			$("#fechaBusquedaR").datepicker({
+			$("#fechaBusquedaS").datepicker({
 				dateFormat : 'dd-mm-yy'
 			});
 		});
 		
 		$(function() {
-			$("#fechaBusquedaR2").datepicker({
+			$("#fechaBusquedaS2").datepicker({
 				dateFormat : 'dd-mm-yy'
 			});
 		});

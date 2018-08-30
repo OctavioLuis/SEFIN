@@ -12,8 +12,8 @@
 <title>Subir archivo</title>
 
 <spring:url value="/resources" var="urlPublic"></spring:url>
-<spring:url value="/pdf/save" var="urlForm"></spring:url>
-<spring:url value="/pdf/lista" var="urlListar"></spring:url>
+<spring:url value="/docenviado/save" var="urlForm"></spring:url>
+<spring:url value="/docenviado/lista" var="urlListar"></spring:url>
 
 <link href="${urlPublic}/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -22,7 +22,6 @@
 	href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
 </head>
-
 <body>
 
 	<!-- Fixed navbar -->
@@ -32,14 +31,14 @@
 
 		<div class="page-header">
 			<h3 class="blog-title">
-				<span class="label label-success">Datos</span>
+				<span class="label label-success">Datos de los documentos enviados</span>
 			</h3>
 		</div>
 		
 		<c:if test="${msg!=null }">
 			<div class='alert alert-success' role="alert">${ msg }</div>
 		</c:if>
-		<spring:hasBindErrors name="documentoPdf">
+		<spring:hasBindErrors name="documentoEnviado">
 			<div class='alert alert-danger' role='alert'>
 				Por favor corrija los siguientes errores:
 				<ul>
@@ -52,7 +51,7 @@
 
 <%-- 		${documentoPdf } --%>
 		<form:form action="${urlForm}" method="post"
-			enctype="multipart/form-data" modelAttribute="documentoPdf">
+			enctype="multipart/form-data" modelAttribute="documentoEnviado">
 			<div class="row"></div>
 
 
@@ -66,29 +65,40 @@
 							id="folio" required="required" />
 					</div>
 				</div>
+				
+				
+<!-- 				<div class="col-sm-3"> -->
+<!-- 					<div class="form-group"> -->
+<!-- 						<label for="nombreEmisor">Nombre  emisor</label> -->
+<%-- 						<form:input type="text" class="form-control" path="nombreEmisor" --%>
+<%-- 							id="nombreEmisor" required="required" /> --%>
+<!-- 					</div> -->
+<!-- 				</div> -->
+				
 				<div class="col-sm-3">
 					<div class="form-group">
-						<label for="nombreEmisor">Nombre  emisor</label>
-						<form:input type="text" class="form-control" path="nombreEmisor"
-							id="nombreEmisor" required="required" />
+						<label for="nombreEmisor" class="control-label">Nombre  emisor</label>
+						<form:select id="quienElaboro" path="nombreEmisor"	class="form-control" 
+						items="${usuario}" itemLabel="nombreCompleto" itemValue="idUsuario" />
+					</div>
+				</div>
+
+			<div class="col-sm-3">
+					<div class="form-group">
+						<label for="quienElaboro" class="control-label">uienElaboro</label>
+						<form:select id="quienElaboro" path="quienElaboro"	class="form-control" 
+						items="${usuario}" itemLabel="nombreCompleto" itemValue="idUsuario" />
 					</div>
 				</div>
 				
 				<div class="col-sm-3">
 					<div class="form-group">
-						<label for="dependenciaEmisor">Dependencia  emisora</label>
-						<form:input type="text" class="form-control" path="dependenciaEmisor"
-							id="dependenciaEmisor" required="required" />
-					</div>
-				</div>
-
-				<div class="col-sm-3">
-					<div class="form-group">
-						<label for="fechaEntrada">Fecha de emisión</label> <form:input type="text"
-							class="form-control" path="fechaEntrada" id="fechaEntrada"
+						<label for="fechaEmision">Fecha de emisión</label> <form:input type="text"
+							class="form-control" path="fechaEmision" id="fechaEmision"
 							required="required" />
 					</div>
 				</div>
+				
 				
 					
 				
@@ -96,31 +106,35 @@
 			</div>
 
 			<div class="row">
+			
 			<div class="col-sm-3">
 					<div class="form-group">
-						<label for="fechaRecibida">Fecha de recibido</label> <form:input type="text"
-							class="form-control" path="fechaRecibida" id="fechaRecibida"
+						<label for="fechaSalida">fechaSalida</label> <form:input type="text"
+							class="form-control" path="fechaSalida" id="fechaSalida"
 							required="required" />
 					</div>
 				</div>
 				
-				
+			<div class="col-sm-3">
+					<div class="form-group">
+						<label for="fechaRecepcion">Fecha de fechaRecepcion</label> <form:input type="text"
+							class="form-control" path="fechaRecepcion" id="fechaRecepcion"
+							required="required" />
+					</div>
+				</div>
 				
 				<div class="col-sm-3">
 					<div class="form-group">
-						<label for="idEncargado" class="control-label">Quien recibió</label>
-						<form:select id="idEncargado" path="idEncargado"	class="form-control" 
-						items="${usuario}" itemLabel="nombreCompleto" itemValue="idUsuario" />
+						<label for="dependenciaReceptora">dependenciaReceptora</label>
+						<form:input type="text" class="form-control" path="dependenciaReceptora"
+							id="tipo"  />
 					</div>
 				</div>
+				
+				
+				
 
-				<div class="col-sm-3">
-					<div class="form-group">
-						<label for="fechaModificacion">Fecha de modificación/Turnado</label> <form:input type="text"
-							class="form-control" path="fechaModificacion" id="fechaEstreno"
-							required="required" />
-					</div>
-				</div>
+				
 				<div class="col-sm-3">
 					<div class="form-group">
 						<label for="tipo">Tipo de documento</label>
@@ -134,30 +148,10 @@
 
 			<div class="row">
 
-<!-- 				<div class="col-sm-3"> -->
-<!-- 					<div class="form-group"> -->
-<!-- 						<label for="idEncargado">idEncargado</label> -->
-<%-- 						<form:input type="text" class="form-control" path="idEncargado" --%>
-<%-- 							id="idEncargado" required="required" /> --%>
-<!-- 					</div> -->
-<!-- 				</div> -->
-
-				
-				
-				
-				
-				<div class="col-sm-3">
-					<div class="form-group">
-						<label for="quienModifico" class="control-label">Quien modifico</label>
-						<form:select id="quienModifico" path="quienModifico"	class="form-control" 
-						items="${usuario}" itemLabel="NombreCompleto" itemValue="idUsuario" />
-					</div>
-				</div>
 				
 				<div class="col-sm-3">
 					<div class="form-group">
 						<label for="file">Archivo</label>
-<%-- 												<form:hidden path="content" /> --%>
 						<input type="file" name="file" id="file" ></input>
 						<p class="help-block">Documento a guardar</p>
 					</div>
@@ -196,20 +190,20 @@
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script>
 		$(function() {
-			$("#fechaEstreno").datepicker({
+			$("#fechaEmision").datepicker({
 				dateFormat : 'dd-mm-yy'
 			});
 		});
 		
 		
 		$(function() {
-			$("#fechaEntrada").datepicker({
+			$("#fechaSalida").datepicker({
 				dateFormat : 'dd-mm-yy'
 			});
 		});
 		
 		$(function() {
-			$("#fechaRecibida").datepicker({
+			$("#fechaRecepcion").datepicker({
 				dateFormat : 'dd-mm-yy'
 			});
 		});

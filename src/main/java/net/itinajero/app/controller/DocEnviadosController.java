@@ -23,33 +23,34 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import net.itinajero.app.model.DocumentoPdf;
-import net.itinajero.app.service.IPdfService;
+import net.itinajero.app.model.DocumentoEnviado;
+import net.itinajero.app.service.DocEnviadoService;
 import net.itinajero.app.service.IUsuarioService;
 
 @Controller
-@RequestMapping("/pdf")
-public class PdfController {
-
-	@Autowired
-	private IPdfService servicePdf;
+@RequestMapping("/docenviado")
+public class DocEnviadosController {
 
 	@Autowired
 	private IUsuarioService serviceUsuario;
 
+	@Autowired
+	private DocEnviadoService serviceDocEnviado;
+
 	@RequestMapping(value = "/crear", method = RequestMethod.GET)
-	public String formPdf(@ModelAttribute DocumentoPdf documentoPdf, Model model) {
-		model.addAttribute("usuario", serviceUsuario.buscarTodas());		
-		documentoPdf.setFolio(servicePdf.UltimoFolio());
-		return "docPdf/formPdf";
+	public String formDocEnviado(@ModelAttribute DocumentoEnviado documentoEnviado, Model model) {
+		model.addAttribute("usuario", serviceUsuario.buscarTodas());
+		documentoEnviado.setFolio(serviceDocEnviado.UltimoFolio());
+		return "docEnviado/formDocEnviado";
+
 	}
 
 	@PostMapping("/save")
-	public String guardar(@ModelAttribute DocumentoPdf documentoPdf, BindingResult result,
+	public String guardar(@ModelAttribute DocumentoEnviado documentoEnviado, BindingResult result,
 			RedirectAttributes attributes, @RequestParam("file") MultipartFile file, HttpServletResponse response) {
 
 		if (result.hasErrors()) {
@@ -69,98 +70,99 @@ public class PdfController {
 				// CreateBlob(file.getInputStream());
 				// Blob newContent = session.getLobHelper().createBlob(file.getInputStream(),
 				// file.getSize());
-				documentoPdf.setFilename(file.getOriginalFilename());
-				documentoPdf.setContentType(file.getContentType());
-				documentoPdf.setContent(destFile);
+				documentoEnviado.setFilename(file.getOriginalFilename());
+				documentoEnviado.setContentType(file.getContentType());
+				documentoEnviado.setContent(destFile);
 				System.out.println("Nuevo pero si cargo archivo");
 			} catch (Exception e) {
 				// TODO: handle exception
 			}
 		} else {
-			if (documentoPdf.getIdDucumento() == 0) {
+			if (documentoEnviado.getIdDucumento() == 0) {
 				System.out.println("Nuevo pero no cargo archivo");
 			} else {
 
-				DocumentoPdf doc = servicePdf.buscarPorId(documentoPdf.getIdDucumento());
-				documentoPdf.setContent(doc.getContent());
-				documentoPdf.setFilename(doc.getFilename());
-				documentoPdf.setContentType(doc.getContentType());
+				 DocumentoEnviado doc = serviceDocEnviado.buscarPorId(documentoEnviado.getIdDucumento());
+				 documentoEnviado.setContent(doc.getContent());
+				 documentoEnviado.setFilename(doc.getFilename());
+				 documentoEnviado.setContentType(doc.getContentType());
 				System.out.println("Actualizar");
 			}
 
 		}
 
-		servicePdf.insertar(documentoPdf);
+		serviceDocEnviado.insertar(documentoEnviado);
 		attributes.addFlashAttribute("msg", "Registro Guardado");
-		return "redirect:/pdf/lista";
+		return "redirect:/docenviado/lista";
 	}
 
 	@GetMapping("/lista")
-	public String mostrarPdf(Model model, @ModelAttribute DocumentoPdf documentoPdf2) {
-		model.addAttribute("documentoPdf", servicePdf.buscarTodas());
+	public String mostrarPdf(Model model, @ModelAttribute DocumentoEnviado documentoEnviado) {
+		model.addAttribute("documentoEnviado", serviceDocEnviado.buscarTodas());
 		model.addAttribute("usuario", serviceUsuario.buscarTodas());
-		return "docPdf/listaPdf";
+		return "docEnviado/listaDocEnviado";
 	}
 	
+	
 	@RequestMapping(value= "/lista2", method = RequestMethod.POST)
-	public String mostrarPdfPorUs(Model model, HttpServletRequest request) {
-		model.addAttribute("documentoPdf", servicePdf.buscarporIdUsuarioEncargado(Integer.parseInt(request.getParameter("idEncargado"))));
+	public String mostrarPdfPorUsEmitio(Model model, HttpServletRequest request) {
+		model.addAttribute("documentoEnviado", serviceDocEnviado.buscarporIdUsuarioEmisor(Integer.parseInt(request.getParameter("quienElaboro"))));
 		model.addAttribute("usuario", serviceUsuario.buscarTodas());
-		model.addAttribute("usuarioconectado", request.getParameter("idEncargado"));		
-		return "docPdf/listaPdf";
+		model.addAttribute("usuarioconectado", request.getParameter("quienElaboro"));		
+		return "docEnviado/listaDocEnviado";
 	}
 	
 	@RequestMapping(value= "/lista3", method = RequestMethod.POST)
 	public String mostrarPdfPorUsModifica(Model model, HttpServletRequest request) {
-		model.addAttribute("documentoPdf", servicePdf.buscarporIdUsuarioModifica(Integer.parseInt(request.getParameter("idEncargado"))));
+		model.addAttribute("documentoEnviado", serviceDocEnviado.buscarporIdUsuarioElaboro(Integer.parseInt(request.getParameter("quienElaboro"))));
 		model.addAttribute("usuario", serviceUsuario.buscarTodas());
-		model.addAttribute("usuarioconectado", request.getParameter("idEncargado"));		
-		return "docPdf/listaPdf";
+		model.addAttribute("usuarioconectado", request.getParameter("quienElaboro"));		
+		return "docEnviado/listaDocEnviado";
 	}
+	
 
 	@GetMapping(value = "/edit/{idDucumento}")
 	public String editar(@PathVariable("idDucumento") int idDucumento, Model model) {
-		DocumentoPdf pdf = servicePdf.buscarPorId(idDucumento);		
-		model.addAttribute("documentoPdf", pdf);
+		DocumentoEnviado docEnviado = serviceDocEnviado.buscarPorId(idDucumento);
+		model.addAttribute("documentoEnviado", docEnviado);
 		model.addAttribute("usuario", serviceUsuario.buscarTodas());
-		return "docPdf/formPdf";
+		return "docEnviado/formDocEnviado";
 	}
 
 	@GetMapping(value = "/delete/{id}")
 	public String eliminar(@PathVariable("id") int idDocumento, RedirectAttributes attribute) {
 		attribute.addFlashAttribute("msg", "La pelicula fue eliminada");
-		servicePdf.eliminar(idDocumento);
-		return "redirect:/pdf/lista";
+		serviceDocEnviado.eliminar(idDocumento);
+		return "redirect:/docenviado/lista";
 	}
-
+	
 	@RequestMapping(value = "/searchByDateEmisio", method = RequestMethod.POST)
 	public String buscarPorFechaEmision(@RequestParam("fechaBusqueda") Date fechaBusqueda,
 			@RequestParam("fechaBusqueda2") Date fechaBusqueda2, Model model) {		
-		model.addAttribute("documentoPdf", servicePdf.buscarporFechaEmision(fechaBusqueda, fechaBusqueda2));
+		model.addAttribute("documentoEnviado", serviceDocEnviado.buscarporFechaEmision(fechaBusqueda, fechaBusqueda2));
 		model.addAttribute("usuario", serviceUsuario.buscarTodas());
-		return "docPdf/listaPdf";
+		return "docEnviado/listaDocEnviado";
 	}
 	
-	@RequestMapping(value = "/searchByDateResibido", method = RequestMethod.POST)
-	public String buscarPorFechaRecibido(@RequestParam("fechaBusquedaR") Date fechaBusqueda,
-			@RequestParam("fechaBusquedaR2") Date fechaBusqueda2, Model model) {		
-		model.addAttribute("documentoPdf", servicePdf.buscarporFechaRecibida(fechaBusqueda, fechaBusqueda2));
+	@RequestMapping(value = "/searchByDateSalida", method = RequestMethod.POST)
+	public String buscarPorFechaRecibido(@RequestParam("fechaBusquedaS") Date fechaBusqueda,
+			@RequestParam("fechaBusquedaS2") Date fechaBusqueda2, Model model) {		
+		model.addAttribute("documentoEnviado", serviceDocEnviado.buscarporFechaSalida(fechaBusqueda, fechaBusqueda2));
 		model.addAttribute("usuario", serviceUsuario.buscarTodas());
-		return "docPdf/listaPdf";
+		return "docEnviado/listaDocEnviado";
 	}
 	
 	@RequestMapping(value = "/searchByFolio", method = RequestMethod.POST)
-	public String buscarPorFolio(@RequestParam("folio") String folio, Model model) {
-		System.out.println("Fecha busqueda: " + folio);
-		model.addAttribute("documentoPdf", servicePdf.buscarporFolio(folio));
+	public String buscarPorFolio(@RequestParam("folio") String folio, Model model) {		
+		model.addAttribute("documentoEnviado", serviceDocEnviado.buscarporFolio(folio));
 		model.addAttribute("usuario", serviceUsuario.buscarTodas());
-		return "docPdf/listaPdf";
+		return "docEnviado/listaDocEnviado";
 	}
 
 	@RequestMapping("/download/{idDucumento}")
 	public String download(@PathVariable("idDucumento") int idDocumento, HttpServletResponse response) {
 
-		DocumentoPdf doc = servicePdf.buscarPorId(idDocumento);
+		DocumentoEnviado doc = serviceDocEnviado.buscarPorId(idDocumento);
 
 		try {
 			response.setHeader("Content-Disposition", "inline;filename=\"" + doc.getFilename() + "\"");
@@ -176,11 +178,10 @@ public class PdfController {
 
 		return null;
 	}
-
+	
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
 	}
-
 }
