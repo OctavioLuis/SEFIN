@@ -1,6 +1,7 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,33 +36,24 @@
 
 	<div class="container theme-showcase" role="main">
 		<div class="table-responsive">
+		
+		
 			<div class="row">
 				<div class="col-sm-3">
-
-
 					<form class="form-inline" action="${urlRoot}pdf/searchByFolio"
 						method="post">
-
-
 						<div class="form-group">
 							<label for="folio">Buscar por folio</label> <input type="text"
 								class="form-control" name="folio" id="folio" required="required" />
 						</div>
-
-
-
-
 						<button type="submit" class="btn btn-primary">Filtrar</button>
 					</form>
 				</div>
-
+				
 				<div class="col-sm-3">
 					<form class="form-inline" action="${urlRoot}pdf/searchByDateEmisio"
 						method="post">
-
-
 						<label for="fechaBusqueda">Busqueda por fecha de emisión</label>
-
 						<div class="form-group">
 							<label for="fechaBusqueda">de</label> <input type="text"
 								class="form-control" name="fechaBusqueda" id="fechaBusqueda"
@@ -73,18 +65,34 @@
 									class="form-control" name="fechaBusqueda2" id="fechaBusqueda2"
 									required="required" />
 							</div>
+							
+							<button type="submit" class="btn btn-primary">Filtrar</button>
+						</div>
+						<!-- 				<button type="submit" class="btn btn-primary">Filtrar</button> -->
+					</form>
+				</div>		
+				
+				<div class="col-sm-3">
+					<form class="form-inline" action="${urlRoot}pdf/searchByDateResibido"
+						method="post">
+						<label for="fechaBusqueda">Busqueda por fecha de recibido</label>
+						<div class="form-group">
+							<label for="fechaBusquedaR">de</label> <input type="text"
+								class="form-control" name="fechaBusquedaR" id="fechaBusquedaR"
+								required="required" />
+						</div>
+						<div class="col-sm-3">
+							<div class="form-group">
+								<label for="fechaBusquedaR2">A</label> <input type="text"
+									class="form-control" name="fechaBusquedaR2" id="fechaBusquedaR2"
+									required="required" />
+							</div>
 
 							<button type="submit" class="btn btn-primary">Filtrar</button>
 						</div>
-
-
 						<!-- 				<button type="submit" class="btn btn-primary">Filtrar</button> -->
 					</form>
-				</div>
-				
-				
-
-
+				</div>						
 				<div class="col-sm-3">
 
 					<a href="${urllistar}" class="btn btn-success" role="button"
@@ -102,7 +110,11 @@
 			<a href="${urlCreate}" class="btn btn-success" role="button"
 				title="Nueva Pelicula">Nuevo documento</a><br> <br>
 
-
+<%-- 		<c:forEach items="${usuarioconectado}" var="uC"> --%>
+<%-- 		<h1>${uC}</h1> --%>
+<!-- 		<input type="text" class="form-control" name="IdTem" -->
+<%-- 							id="IdTem" value="${uC}"> --%>
+<%-- 		</c:forEach> --%>
 
 
 
@@ -206,6 +218,18 @@
 
 		$(function() {
 			$("#fechaBusqueda2").datepicker({
+				dateFormat : 'dd-mm-yy'
+			});
+		});
+		
+		$(function() {
+			$("#fechaBusquedaR").datepicker({
+				dateFormat : 'dd-mm-yy'
+			});
+		});
+		
+		$(function() {
+			$("#fechaBusquedaR2").datepicker({
 				dateFormat : 'dd-mm-yy'
 			});
 		});

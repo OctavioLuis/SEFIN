@@ -90,7 +90,7 @@
 					<div class="form-group">
 						<label for=cargo>Cargo</label>
 						<form:input type="text" class="form-control" path="cargo"
-							id="cargo" required="required" />
+							id="cargo"  />
 					</div>
 				</div>
 

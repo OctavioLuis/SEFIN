@@ -125,7 +125,7 @@
 					<div class="form-group">
 						<label for="tipo">Tipo de documento</label>
 						<form:input type="text" class="form-control" path="tipo"
-							id="tipo" required="required" />
+							id="tipo"  />
 					</div>
 				</div>
 				

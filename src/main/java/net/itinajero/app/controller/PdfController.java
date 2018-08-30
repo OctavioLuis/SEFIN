@@ -6,6 +6,7 @@ import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
@@ -42,7 +43,8 @@ public class PdfController {
 
 	@RequestMapping(value = "/crear", method = RequestMethod.GET)
 	public String formPdf(@ModelAttribute DocumentoPdf documentoPdf, Model model) {
-		model.addAttribute("usuario", serviceUsuario.buscarTodas());
+		model.addAttribute("usuario", serviceUsuario.buscarTodas());		
+		documentoPdf.setFolio(servicePdf.UltimoFolio());
 		return "docPdf/formPdf";
 	}
 
@@ -94,9 +96,25 @@ public class PdfController {
 	}
 
 	@GetMapping("/lista")
-	public String mostrarPdf(Model model) {
+	public String mostrarPdf(Model model, @ModelAttribute DocumentoPdf documentoPdf2) {
 		model.addAttribute("documentoPdf", servicePdf.buscarTodas());
 		model.addAttribute("usuario", serviceUsuario.buscarTodas());
+		return "docPdf/listaPdf";
+	}
+	
+	@RequestMapping(value= "/lista2", method = RequestMethod.POST)
+	public String mostrarPdfPorUs(Model model, HttpServletRequest request) {
+		model.addAttribute("documentoPdf", servicePdf.buscarporIdUsuarioEncargado(Integer.parseInt(request.getParameter("idEncargado"))));
+		model.addAttribute("usuario", serviceUsuario.buscarTodas());
+		model.addAttribute("usuarioconectado", request.getParameter("idEncargado"));		
+		return "docPdf/listaPdf";
+	}
+	
+	@RequestMapping(value= "/lista3", method = RequestMethod.POST)
+	public String mostrarPdfPorUsModifica(Model model, HttpServletRequest request) {
+		model.addAttribute("documentoPdf", servicePdf.buscarporIdUsuarioModifica(Integer.parseInt(request.getParameter("idEncargado"))));
+		model.addAttribute("usuario", serviceUsuario.buscarTodas());
+		model.addAttribute("usuarioconectado", request.getParameter("idEncargado"));		
 		return "docPdf/listaPdf";
 	}
 
@@ -118,13 +136,20 @@ public class PdfController {
 
 	@RequestMapping(value = "/searchByDateEmisio", method = RequestMethod.POST)
 	public String buscarPorFechaEmision(@RequestParam("fechaBusqueda") Date fechaBusqueda,
-			@RequestParam("fechaBusqueda2") Date fechaBusqueda2, Model model) {
-		System.out.println("Fecha busqueda: " + fechaBusqueda);
-		model.addAttribute("documentoPdf", servicePdf.buscarporFecha(fechaBusqueda, fechaBusqueda2));
+			@RequestParam("fechaBusqueda2") Date fechaBusqueda2, Model model) {		
+		model.addAttribute("documentoPdf", servicePdf.buscarporFechaEmision(fechaBusqueda, fechaBusqueda2));
 		model.addAttribute("usuario", serviceUsuario.buscarTodas());
 		return "docPdf/listaPdf";
 	}
-
+	
+	@RequestMapping(value = "/searchByDateResibido", method = RequestMethod.POST)
+	public String buscarPorFechaRecibido(@RequestParam("fechaBusquedaR") Date fechaBusqueda,
+			@RequestParam("fechaBusquedaR2") Date fechaBusqueda2, Model model) {		
+		model.addAttribute("documentoPdf", servicePdf.buscarporFechaRecibida(fechaBusqueda, fechaBusqueda2));
+		model.addAttribute("usuario", serviceUsuario.buscarTodas());
+		return "docPdf/listaPdf";
+	}
+	
 	@RequestMapping(value = "/searchByFolio", method = RequestMethod.POST)
 	public String buscarPorFolio(@RequestParam("folio") String folio, Model model) {
 		System.out.println("Fecha busqueda: " + folio);

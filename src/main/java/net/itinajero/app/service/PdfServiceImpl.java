@@ -37,7 +37,7 @@ public class PdfServiceImpl implements IPdfService{
 		
 	}
 	@Override
-	public List<DocumentoPdf> buscarporFecha(Date fecha, Date fecha2) {
+	public List<DocumentoPdf> buscarporFechaEmision(Date fecha, Date fecha2) {
 		// TODO Auto-generated method stub
 		return pdfRepo.findByFecha(fecha, fecha2 );
 	}
@@ -45,6 +45,26 @@ public class PdfServiceImpl implements IPdfService{
 	public List<DocumentoPdf> buscarporFolio(String folio) {
 		// TODO Auto-generated method stub
 		return pdfRepo.findByFolio(folio);
+	}
+	@Override
+	public List<DocumentoPdf> buscarporFechaRecibida(Date fecha, Date fecha2) {
+		// TODO Auto-generated method stub
+		return pdfRepo.findByFechaRecibido(fecha, fecha2);
+	}
+	@Override
+	public List<DocumentoPdf> buscarporIdUsuarioEncargado(int idUsuario) {
+		// TODO Auto-generated method stub
+		return pdfRepo.findByIDUsuariosEncargado(idUsuario);
+	}
+	@Override
+	public List<DocumentoPdf> buscarporIdUsuarioModifica(int idUsuario) {
+		// TODO Auto-generated method stub
+		return pdfRepo.findByIDUsuariosModifica(idUsuario);
+	}
+	@Override
+	public String UltimoFolio() {
+		// TODO Auto-generated method stub
+		return pdfRepo.ultimoFolio();
 	}
 
 }
