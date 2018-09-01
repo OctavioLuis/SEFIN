@@ -154,9 +154,10 @@
 								<td>${us.nombreCompleto}</td>
 							</c:if>
 						</c:forEach>
-
-						<td><fmt:formatDate value="${pdf.fechaModificacion}"
-								pattern="dd-MM-yyyy" /></td>
+								
+								<td>${pdf.fechaModificacion}</td>
+<%-- 						<td><fmt:formatDate value="${pdf.fechaModificacion}" --%>
+<%-- 								pattern="dd-MM-yyyy" /></td> --%>
 						
 
 						<c:forEach items="${usuario}" var="us">

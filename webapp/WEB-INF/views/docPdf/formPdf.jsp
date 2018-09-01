@@ -77,7 +77,7 @@
 				<div class="col-sm-3">
 					<div class="form-group">
 						<label for="dependenciaEmisor">Dependencia  emisora</label>
-						<form:input type="text" class="form-control" path="dependenciaEmisor"
+						<form:input type="search" class="form-control" path="dependenciaEmisor"
 							id="dependenciaEmisor" required="required" />
 					</div>
 				</div>
@@ -117,8 +117,7 @@
 				<div class="col-sm-3">
 					<div class="form-group">
 						<label for="fechaModificacion">Fecha de modificación/Turnado</label> <form:input type="text"
-							class="form-control" path="fechaModificacion" id="fechaEstreno"
-							required="required" />
+							class="form-control" path="fechaModificacion" id="fechaEstreno"	/>
 					</div>
 				</div>
 				<div class="col-sm-3">
@@ -213,6 +212,17 @@
 				dateFormat : 'dd-mm-yy'
 			});
 		});
+		
+		
+		 $(document).ready(function() {
+				$("#dependenciaEmisor")
+						.autocomplete(
+								{
+									source : '${pageContext.request.contextPath }/dependencia/search'
+								});
+			});
+		
+		
 	</script>
 </body>
 </html>

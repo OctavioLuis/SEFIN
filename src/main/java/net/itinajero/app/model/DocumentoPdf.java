@@ -22,8 +22,8 @@ public class DocumentoPdf {
     private String folio;    
     private String nombreEmisor;    
     private Date fechaEntrada =new Date();    
-    private int quienModifico;    
-    private Date fechaModificacion =new Date();    
+    private int quienModifico =2;    
+    private String fechaModificacion ;    
     private String  asunto;
     private String tipo;
     private int idEncargado;
@@ -72,12 +72,17 @@ public class DocumentoPdf {
 		this.quienModifico = quienModifico;
 	}
 
-	public Date getFechaModificacion() {
+	
+	
+	
+	public String getFechaModificacion() {
 		return fechaModificacion;
 	}
-	public void setFechaModificacion(Date fechaModificacion) {
+
+	public void setFechaModificacion(String fechaModificacion) {
 		this.fechaModificacion = fechaModificacion;
 	}
+
 	public String getAsunto() {
 		return asunto;
 	}

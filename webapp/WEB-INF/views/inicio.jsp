@@ -17,6 +17,7 @@
 <spring:url value="/docenviado/lista" var="urlDocEnviado" />
 <spring:url value="/usuario/edit" var="urlDocComp" />
 <spring:url value="/usuario/lista" var="urlUsuario" />
+<spring:url value="/usuario/lista" var="urlDependencia" />
 
 <spring:url value="/pdf/lista2" var="urlListarById"></spring:url>
 
@@ -187,6 +188,11 @@
 			<div class="col-md-4">
 				<a href="${urlUsuario}" class="btn btn-success" role="button"
 					title="Nueva Pelicula">Trabajadores</a><br> <br>
+			</div>
+			
+			<div class="col-md-4">
+				<a href="${urlDependencia}" class="btn btn-success" role="button"
+					title="Nueva Pelicula">Dependencia</a><br> <br>
 			</div>
 		</div>
 

@@ -55,9 +55,11 @@ public class UsuarioController {
 	}
 	
 	@GetMapping(value = "/delete/{idUsuario}")
-	public String eliminar(@PathVariable("idUsuario") int idUsuario, RedirectAttributes attribute) {
-		attribute.addFlashAttribute("msg", "El usuario fue eliminada");
-		serviceUsuario.eliminar(idUsuario);
+	public String eliminar(@PathVariable("idUsuario") int idUsuario, RedirectAttributes attribute) {		
+		if(idUsuario!=2) {
+			serviceUsuario.eliminar(idUsuario);
+			attribute.addFlashAttribute("msg", "El usuario fue eliminada");
+		}
 		return "redirect:/usuario/lista";
 	}
 
