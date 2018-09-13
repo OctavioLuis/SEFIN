@@ -22,6 +22,7 @@ public class HomeController {
 		
 		
 		return "inicio";
+//		return "auto";
 	}
 
 }

@@ -62,14 +62,17 @@ public class DependenciaController {
 	@GetMapping(value = "/delete/{idDependencia}")
 	public String eliminar(@PathVariable("idDependencia") int idDependencia, RedirectAttributes attribute) {
 		attribute.addFlashAttribute("msg", "la dependencia fue eliminada");
-		serviceDependencia.eliminar(idDependencia);
+		if(idDependencia!=1) {
+			serviceDependencia.eliminar(idDependencia);	
+		}
+		
 		return "redirect:/dependencia/lista";
 	}
 	
 	@RequestMapping(value = "search", method = RequestMethod.GET)
 	@ResponseBody
 	public List<Dependencia> search(HttpServletRequest request) {
-		System.out.println("resuterm : "+request.getParameter("term"));		
+		System.out.println("resuterm : "+serviceDependencia.search(request.getParameter("term")));		
 		return serviceDependencia.search(request.getParameter("term"));
 	}
 }

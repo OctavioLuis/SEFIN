@@ -74,14 +74,23 @@
 					</div>
 				</div>
 				
-				<div class="col-sm-3">
+<!-- 				<div class="col-sm-3"> -->
+<!-- 					<div class="form-group"> -->
+<!-- 						<label for="dependenciaEmisor">Dependencia  emisora</label> -->
+<%-- 						<form:input type="search" class="form-control" path="dependenciaEmisor" --%>
+<%--  							id="dependenciaEmisor" required="required" />  --%>
+<!-- 					</div> -->
+<!-- 				</div> -->
+
+
+			<div class="col-sm-3">
 					<div class="form-group">
-						<label for="dependenciaEmisor">Dependencia  emisora</label>
-						<form:input type="search" class="form-control" path="dependenciaEmisor"
-							id="dependenciaEmisor" required="required" />
+						<label for="dependenciaEmisor" class="control-label">Dependencia  emisora</label>
+						<form:select id="dependenciaEmisor" path="dependenciaEmisor"	class="form-control" 
+ 						items="${dependencia}" itemLabel="nombre" itemValue="idDependencia" /> 
 					</div>
 				</div>
-
+				
 				<div class="col-sm-3">
 					<div class="form-group">
 						<label for="fechaEntrada">Fecha de emisión</label> <form:input type="text"

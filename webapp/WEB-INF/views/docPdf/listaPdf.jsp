@@ -141,7 +141,15 @@
 					<tr>
 						<td>${pdf.folio}</td>
 						<td>${pdf.nombreEmisor}</td>
-						<td>${pdf.dependenciaEmisor}</td>
+						
+						
+						<c:forEach items="${dependencia}" var="dep">
+							<c:if test="${dep.idDependencia==pdf.dependenciaEmisor}">
+								<td>${dep.nombre}</td>
+							</c:if>
+						</c:forEach>
+						
+<%-- 						<td>${pdf.dependenciaEmisor}</td> --%>
 
 						<td><fmt:formatDate value="${pdf.fechaEntrada}"
 								pattern="dd-MM-yyyy" /></td>

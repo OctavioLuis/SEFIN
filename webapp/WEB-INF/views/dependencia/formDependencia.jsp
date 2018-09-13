@@ -108,11 +108,11 @@
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<script src="${urlPublic}/bootstrap/js/bootstrap.min.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<script type="text/javascript"
-		src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-	<script type="text/javascript"
-		src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+	
+	
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	
 	<script type="text/javascript">
 		$(function() {
@@ -121,14 +121,6 @@
 			});
 		});
 
-		
-// 	    $(document).ready(function() {
-// 			$("#productName")
-// 					.autocomplete(
-// 							{
-// 								source : '${pageContext.request.contextPath }/dependencia/search'
-// 							});
-// 		});
-	</script>
+ 	</script> 
 </body>
 </html>

@@ -50,12 +50,19 @@ public class DocumentoPdf {
 	public void setFolio(String folio) {
 		this.folio = folio;
 	}
+	
+	
+	
+
+
 	public String getNombreEmisor() {
 		return nombreEmisor;
 	}
+
 	public void setNombreEmisor(String nombreEmisor) {
 		this.nombreEmisor = nombreEmisor;
 	}
+
 	public Date getFechaEntrada() {
 		return fechaEntrada;
 	}

@@ -17,7 +17,7 @@
 <spring:url value="/docenviado/lista" var="urlDocEnviado" />
 <spring:url value="/usuario/edit" var="urlDocComp" />
 <spring:url value="/usuario/lista" var="urlUsuario" />
-<spring:url value="/usuario/lista" var="urlDependencia" />
+<spring:url value="/dependencia/lista" var="urlDependencia" />
 
 <spring:url value="/pdf/lista2" var="urlListarById"></spring:url>
 

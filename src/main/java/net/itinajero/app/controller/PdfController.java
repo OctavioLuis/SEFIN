@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import net.itinajero.app.model.DocumentoPdf;
+import net.itinajero.app.service.IDependenciaService;
 import net.itinajero.app.service.IPdfService;
 import net.itinajero.app.service.IUsuarioService;
 
@@ -40,10 +41,14 @@ public class PdfController {
 
 	@Autowired
 	private IUsuarioService serviceUsuario;
+	
+	@Autowired
+	private IDependenciaService serviceDependencia;
 
 	@RequestMapping(value = "/crear", method = RequestMethod.GET)
 	public String formPdf(@ModelAttribute DocumentoPdf documentoPdf, Model model) {
 		model.addAttribute("usuario", serviceUsuario.buscarTodas());
+		model.addAttribute("dependencia", serviceDependencia.buscarTodas());
 		documentoPdf.setFolio(servicePdf.UltimoFolio());
 		return "docPdf/formPdf";
 	}
@@ -93,6 +98,7 @@ public class PdfController {
 	public String mostrarPdf(Model model, @ModelAttribute DocumentoPdf documentoPdf2) {
 		model.addAttribute("documentoPdf", servicePdf.buscarTodas());
 		model.addAttribute("usuario", serviceUsuario.buscarTodas());
+		model.addAttribute("dependencia", serviceDependencia.buscarTodas());
 		return "docPdf/listaPdf";
 	}
 
@@ -102,6 +108,7 @@ public class PdfController {
 				servicePdf.buscarporIdUsuarioEncargado(Integer.parseInt(request.getParameter("idEncargado"))));
 		model.addAttribute("usuario", serviceUsuario.buscarTodas());
 		model.addAttribute("usuarioconectado", request.getParameter("idEncargado"));
+		model.addAttribute("dependencia", serviceDependencia.buscarTodas());
 		return "docPdf/listaPdf";
 	}
 
@@ -111,6 +118,7 @@ public class PdfController {
 				servicePdf.buscarporIdUsuarioModifica(Integer.parseInt(request.getParameter("idEncargado"))));
 		model.addAttribute("usuario", serviceUsuario.buscarTodas());
 		model.addAttribute("usuarioconectado", request.getParameter("idEncargado"));
+		model.addAttribute("dependencia", serviceDependencia.buscarTodas());
 		return "docPdf/listaPdf";
 	}
 
@@ -119,6 +127,7 @@ public class PdfController {
 		DocumentoPdf pdf = servicePdf.buscarPorId(idDucumento);
 		model.addAttribute("documentoPdf", pdf);
 		model.addAttribute("usuario", serviceUsuario.buscarTodas());
+		model.addAttribute("dependencia", serviceDependencia.buscarTodas());
 		return "docPdf/formPdf";
 	}
 
